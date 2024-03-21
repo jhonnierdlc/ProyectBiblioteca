@@ -8,7 +8,7 @@ const Login = () => {
         <div className="containe">
             <div className="main">
                 <div className="content">
-                    <h2>BibilioWeb</h2>
+                    <h2>BiblioSoft</h2>
                     <form action="#" method="post">
                         <input type="text" name="" placeholder="Correo Electronico" required autofocus=""/>
                         <input type="password" name="" placeholder="Contraseña" required autofocus=""/>
