@@ -1,4 +1,8 @@
 import './styles.css'
+import logo from '../../assets/img/logo.svg';
+import { Link } from "react-router-dom";
+
+
 
 const Login = () => {
 	
@@ -17,10 +21,15 @@ const Login = () => {
                          </button>
 
                     </form>
-                    <p className="account">¿No tienes cuenta? <a href="#">Registrar</a></p>
+                    <p className="account">¿No tienes cuenta? 
+                    <Link to="/singup">
+                    <a href="#"> Registrar</a>
+                    </Link>
+                    </p>
                      
                 </div>
                 <div className="form-img">
+                <img src={logo} alt="" />
                 </div>
             </div>
         </div>
