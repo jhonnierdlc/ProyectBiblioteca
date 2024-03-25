@@ -9,6 +9,7 @@ const Singup = () => {
 				<div className="main">
 					<div className="form-imgg">
 						
+					<img src={logo} alt="" />
 
 					</div>
 					<div className="contentt">
