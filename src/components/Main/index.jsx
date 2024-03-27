@@ -1,15 +1,25 @@
+import React, { useState } from 'react';
+import './styles.css';
+import logo from '../../assets/img/home.svg';
 
-const Main = () => {
-	
+
+
+
+const Main = () => {	
 	return (
-		<div >
-			<nav >
-				<h1>fakebook</h1>
-				<button >
-				  Cerrar sesión
-				</button>
-			</nav>
-		</div>
+		<header class="header">
+        <div class="logo">
+			<img src={logo} alt="" />
+        </div>
+        <nav>
+           <ul class="nav-links">
+                <li><a href="#">Inicio </a></li>
+                <li><a href="#">Consultar</a></li>
+                <li><a href="#">Prestamo </a></li>
+           </ul>            
+        </nav>
+        <a class="btn" href="#"><button>Cerrar Sesión</button></a>
+    </header>
 	);
 };
 
