@@ -1,0 +1,60 @@
+
+
+.registro-usuarios-container {
+    background-color: #a5deb8;
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #79cb95;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(14, 13, 13, 0.1);
+    margin-top: 6%;
+    margin-left: 60%;
+  }
+  
+  .img-user{
+    display: flex;
+    justify-content: center;
+    margin: 5px 0px 5px 0px;
+  }
+img{
+  height: 100px;
+  width: 100px;
+
+}
+
+
+  .registro-usuarios-container h2 {
+   
+    font-size: 1.5rem;
+  }
+  
+  .form-registro-usuarios {
+    display: flex;
+    flex-direction: column;
+   
+  }
+  
+  .input-field {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .submit-btn {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #35d169;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #52b172;
+  }
+  
