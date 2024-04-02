@@ -1,0 +1,37 @@
+.libros-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+  }
+  
+  .libro {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .portada-libro {
+    width: 100%;
+    height: 300px; /* Tamaño fijo para la imagen */
+  object-fit: cover; 
+    border-radius: 5px;
+  }
+  
+  .info-libro h3 {
+    margin-top: 0;
+    text-align: center  ;
+  }
+  
+  .info-libro p {
+    margin: 5px 0;
+  }
+  
+  .info-libro strong {
+    font-weight: bold;
+  }
+  button{
+    background: #000;
+  }
+  

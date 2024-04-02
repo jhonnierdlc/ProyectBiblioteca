@@ -3,18 +3,36 @@ import "./styles.css";
 import logo from "../../assets/img/home.svg";
 
 const Main = () => {
+  const [consultarAbierto, setConsultarAbierto] = useState(false);
+
+  const toggleConsultar = () => {
+    setConsultarAbierto(!consultarAbierto);
+  };
+
   return (
-    <header class="header">
-      <div class="logo">
+    <header className="header">
+      <div className="logo">
         <img src={logo} alt="" />
       </div>
       <nav>
-        <ul class="nav-links">
+        <ul className="nav-links">
           <li>
-            <a href="#">Inicio </a>
+            <a href="/">Inicio</a>
           </li>
           <li>
-            <a href="#">Consultar</a>
+            <a href="#" onClick={toggleConsultar}>
+              Consultar
+            </a>
+            {consultarAbierto && (
+              <ul className="sub-menu">
+                <li>
+                  <a href="/Consulta-Libros">Consultar Libro</a>
+                </li>
+                <li>
+                  <a href="/Consulta-Usuario">Consultar Usuario</a>
+                </li>
+              </ul>
+            )}
           </li>
           <li>
             <a href="/Registro-Libros">Registro Libro</a>
@@ -23,11 +41,11 @@ const Main = () => {
             <a href="/Registro-Usuario">Registro Usuarios</a>
           </li>
           <li>
-            <a href="#">Prestamo </a>
+            <a href="#">Prestamo</a>
           </li>
         </ul>
       </nav>
-      <a class="btn" href="#">
+      <a className="btn" href="#">
         <button>Cerrar Sesión</button>
       </a>
     </header>
