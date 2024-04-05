@@ -6,14 +6,15 @@ import RegistroUsuarios from "./components/Usuarios/RegistroUsuarios/RegistroUsu
 import RegistroLibros from "./components/Libros/RegistroLibros/RegistroLibros";
 
 function App() {
+	const user = localStorage.getItem("token");
   return (
     <Routes>
-			<Route path="/" exact element={<Main />} />
+			{user && <Route path="/" exact element={<Main />} />}
 			<Route path="/login" exact element={<Login />} />
-      <Route path="/singup" exact element={<Singup />} />
+     		<Route path="/singup" exact element={<Singup />} />
 			<Route path="/Registro-Usuario" exact element={<RegistroUsuarios />} />
 			<Route path="/Registro-Libros" exact element={<RegistroLibros />} />
-
+			<Route path="/" element={<Navigate replace to="/login" />} />
 	</Routes>
   );
 }

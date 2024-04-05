@@ -111,7 +111,7 @@ const RegistroLibros = () => {
             required
           />
         </div>
-        <button type="submit">Registrar Libro</button>
+        <button className="bto" type="submit">Registrar Libro</button>
       </form>
     </div>
   );

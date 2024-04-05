@@ -46,7 +46,7 @@
     border-radius: 4px;
   }
   
-  button {
+  .bto {
     display: block;
     width: 100%;
     padding: 10px;
@@ -57,11 +57,11 @@
     cursor: pointer;
   }
   
-  button:hover {
+  .bto:hover {
     background-color: #52b172;
   }
   
-  button:active {
+  .bto:active {
     transform: translateY(1px);
   }
   

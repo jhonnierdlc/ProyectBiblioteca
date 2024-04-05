@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import "./styles.css";
 import logo from "../../assets/img/home.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 const Main = () => {
+  const navigate = useNavigate();  
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate('/login');
+
+    // Redirige a la página de inicio de sesión
+  };
+
+
   return (
     <header class="header">
       <div class="logo">
@@ -27,7 +38,7 @@ const Main = () => {
           </li>
         </ul>
       </nav>
-      <a class="btn" href="#">
+      <a class="btn" href="#" onClick={handleLogout}>
         <button>Cerrar Sesión</button>
       </a>
     </header>
