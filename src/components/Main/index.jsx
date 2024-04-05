@@ -4,6 +4,12 @@ import logo from "../../assets/img/home.svg";
 import { Link, useNavigate } from "react-router-dom";
 
 const Main = () => {
+  const [consultarAbierto, setConsultarAbierto] = useState(false);
+
+  const toggleConsultar = () => {
+    setConsultarAbierto(!consultarAbierto);
+  };
+
   const navigate = useNavigate();  
 
   const handleLogout = () => {
@@ -15,17 +21,29 @@ const Main = () => {
 
 
   return (
-    <header class="header">
-      <div class="logo">
+    <header className="header">
+      <div className="logo">
         <img src={logo} alt="" />
       </div>
       <nav>
-        <ul class="nav-links">
+        <ul className="nav-links">
           <li>
-            <a href="#">Inicio </a>
+            <a href="/">Inicio</a>
           </li>
           <li>
-            <a href="#">Consultar</a>
+            <a href="#" onClick={toggleConsultar}>
+              Consultar
+            </a>
+            {consultarAbierto && (
+              <ul className="sub-menu">
+                <li>
+                  <a href="/Consulta-Libros">Consultar Libro</a>
+                </li>
+                <li>
+                  <a href="/Consulta-Usuario">Consultar Usuario</a>
+                </li>
+              </ul>
+            )}
           </li>
           <li>
             <a href="/Registro-Libros">Registro Libro</a>
@@ -34,10 +52,11 @@ const Main = () => {
             <a href="/Registro-Usuario">Registro Usuarios</a>
           </li>
           <li>
-            <a href="#">Prestamo </a>
+            <a href="#">Prestamo</a>
           </li>
         </ul>
       </nav>
+      <a className="btn" href="#">
       <a class="btn" href="#" onClick={handleLogout}>
         <button>Cerrar Sesión</button>
       </a>

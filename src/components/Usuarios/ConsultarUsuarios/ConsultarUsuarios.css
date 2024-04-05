@@ -1,0 +1,40 @@
+.usuarios-container {
+    margin: 20px;
+  }
+  
+  .usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .usuarios-table th,
+  .usuarios-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .usuarios-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .usuarios-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .usuarios-table tr:hover {
+    background-color: #ddd;
+  }
+  
+  .usuarios-table button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .usuarios-table button:hover {
+    background-color: #cc0000;
+  }
+  
