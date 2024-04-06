@@ -3,7 +3,6 @@
   height: 100vh;
   justify-content: center;
   align-items: center;
-  background: white;
 }
 
 .containerr{
@@ -12,7 +11,7 @@
   background: white;
   padding: 25px 30px;
   border-radius: 5px;
-  box-shadow: 7px 13px 90px #7bc4c4;
+  box-shadow: 7px 13px 90px #39a05d;
 
 }
 
@@ -30,7 +29,7 @@
   bottom: 0;
   height: 3px;
   width: 200px;
-  box-shadow: 7px 13px 90px #7bc4c4;
+  box-shadow: 7px 13px 90px #39a05d;
 }
 
 .containerr form .user-details{
@@ -56,7 +55,7 @@ form .user-details .input-box{
   width: 400px;
   outline: none;
   border-radius: 5px;
-  border: 1px solid #75bdbd;
+  border: 1px solid #39a05d;
   padding-left: 15px;
   font-size: 16px;
 }
@@ -88,7 +87,7 @@ form .user-details .input-box{
 
 
 .custom-file-upload:hover {
-  background: #98c9c9;
+  background: #39a05d;
 }
 
 
@@ -102,11 +101,11 @@ form .user-details .input-box{
   font-size: 500;
   letter-spacing: 1px;
   border-radius: 5px;
-  background: #7bc4c4;
+  background: #39a05d;
 }
 
 .btt:hover{
 
-  background: #98c9c9;
+  background: #39995b;
 
 }
