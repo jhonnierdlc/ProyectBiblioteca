@@ -8,7 +8,6 @@ import Main from "./components/Main";
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-		<Main/>
 			<App />
 		</BrowserRouter>
 	</React.StrictMode>,
