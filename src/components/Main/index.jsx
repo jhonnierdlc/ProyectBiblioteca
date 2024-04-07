@@ -9,9 +9,10 @@ const Main = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate('/login');
+    navigate('/login'); 
+    window.location.reload();
 
-    // Redirige a la página de inicio de sesión
+    // Redirige a la página de inici de sesión
   };
 
 
@@ -22,13 +23,15 @@ const Main = () => {
       </div>
       <nav>
         <ul class="nav-links">
-          <li><a href="#">Inicio </a></li>
+          <Link to="/Inicio">
+            <li><a href="#">Inicio </a></li>
+          </Link>
           <li><a href="#">Consultar</a></li>
           <li><a href="#">Prestamo </a></li>
         </ul>
       </nav>
       <a class="btn" href="#" onClick={handleLogout}>
-        <button>Cerrar Sesión</button>
+        <button >Cerrar Sesión</button>
       </a>
     </header>
   );
