@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import "./ConsultarUsuarios.css";
+import ModalEliminar from "../../UI/ModalEliminar";
 
 const ConsultarUsuarios = () => {
   // Datos de usuarios de prueba
   const [usuarios, setUsuarios] = useState([
     { id: 1, nombre: "Usuario de Prueba", email: "prueba@example.com" },
   ]);
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [usuarioAEliminar, setUsuarioAEliminar] = useState(null);
 
   const eliminarUsuario = (id) => {
     const nuevosUsuarios = usuarios.filter((usuario) => usuario.id !== id);
     setUsuarios(nuevosUsuarios);
+    setMostrarModal(false);
+    setUsuarioAEliminar(null);
+  };
+
+  const mostrarModalEliminar = (id) => {
+    setUsuarioAEliminar(id);
+    setMostrarModal(true);
   };
 
   return (
@@ -31,7 +41,7 @@ const ConsultarUsuarios = () => {
               <td>{usuario.nombre}</td>
               <td>{usuario.email}</td>
               <td>
-                <button onClick={() => eliminarUsuario(usuario.id)}>
+                <button onClick={() => mostrarModalEliminar(usuario.id)}>
                   Eliminar
                 </button>
               </td>
@@ -39,6 +49,13 @@ const ConsultarUsuarios = () => {
           ))}
         </tbody>
       </table>
+      {mostrarModal && (
+        <ModalEliminar
+          eliminarId={eliminarUsuario}
+          setMostrarModal={setMostrarModal}
+          idAEliminar={usuarioAEliminar}
+        />
+      )}
     </div>
   );
 };

@@ -28,6 +28,7 @@ function App() {
             <Route path="/Inicio" element={<Inicio />} />
             <Route path="/Registro-Usuario" element={<RegistroUsuarios />} />
             <Route path="/Consulta-Usuario" element={<ConsultarUsuarios />} />
+            <Route path="/Consulta-Libros" element={<ConsultarLibro />} />
             <Route path="/Registro-Libros" element={<RegistroLibros />} />
           </>
         )}

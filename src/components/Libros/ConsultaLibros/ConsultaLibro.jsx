@@ -1,56 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ConsultaLibro.css";
 import { Link } from "react-router-dom";
+import { obtenerLibro } from "../../../services/libroServices";
 
 const ConsultarLibro = () => {
   // Datos de prueba para los libros
-  const libros = [
-    {
-      isbn: "9780141439846",
-      titulo: "Moby Dick",
-      descripcion:
-        "Moby Dick es una novela del autor estadounidense Herman Melville, publicada por vez primera en 1851.",
-      autor: "Herman Melville",
-      portada:
-        "https://assets-global.website-files.com/6034d7d1f3e0f52c50b2adee/625454132a4288889ad4b1d8_6034d7d1f3e0f57d87b2b2a9_Moby-dick-herman-melville-editorial-alma.jpeg",
-    },
-    {
-      isbn: "9788423341379",
-      titulo: "Don Quijote de la Mancha",
-      descripcion:
-        "Don Quijote de la Mancha es una novela escrita por el español Miguel de Cervantes Saavedra. Publicada su primera parte con el título de El ingenioso hidalgo don Quijote de la Mancha a comienzos de 1605.",
-      autor: "Miguel de Cervantes Saavedra",
-      portada:
-        "https://images.cdn2.buscalibre.com/fit-in/360x360/73/b6/73b6fd96c31d26e2b6a3531808c1188c.jpg",
-    },
-    {
-      isbn: "9780061122415",
-      titulo: "To Kill a Mockingbird",
-      descripcion:
-        "To Kill a Mockingbird is a novel by Harper Lee published in 1960. It was immediately successful, winning the Pulitzer Prize, and has become a classic of modern American literature.",
-      autor: "Harper Lee",
-      portada:
-        "https://upload.wikimedia.org/wikipedia/commons/4/4f/To_Kill_a_Mockingbird_%28first_edition_cover%29.jpg",
-    },
-    {
-      isbn: "9788806213942",
-      titulo: "I Promessi Sposi",
-      descripcion:
-        "I Promessi Sposi è un romanzo storico di Alessandro Manzoni pubblicato nel 1827.",
-      autor: "Alessandro Manzoni",
-      portada:
-        "https://images.cdn3.buscalibre.com/fit-in/360x360/1b/cd/1bcd571d3560a0dac9bf926301e8e65f.jpg",
-    },
-    {
-      isbn: "9788806213942",
-      titulo: "I Promessi Sposi",
-      descripcion:
-        "I Promessi Sposi è un romanzo storico di Alessandro Manzoni pubblicato nel 1827.",
-      autor: "Alessandro Manzoni",
-      portada:
-        "https://images.cdn3.buscalibre.com/fit-in/360x360/1b/cd/1bcd571d3560a0dac9bf926301e8e65f.jpg",
-    },
-  ];
+  const [libros, setLibros] = useState([]);
+
+  useEffect(() => {
+    // Realiza la solicitud para obtener la lista de libros cuando el componente se monte
+    obtenerLibro()
+      .then((response) => {
+        setLibros(response.data); // Actualiza el estado con los datos de los libros recibidos
+      })
+      .catch((error) => {
+        console.error("Error al obtener los libros:", error);
+      });
+  }, []);
 
   const [expandedBooks, setExpandedBooks] = useState([]);
 
@@ -61,7 +27,7 @@ const ConsultarLibro = () => {
       setExpandedBooks([...expandedBooks, index]);
     }
   };
-
+  console.log(libros);
   return (
     <>
       <div className="libros-container">

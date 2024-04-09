@@ -13,7 +13,7 @@ export const obtenerClientes = () => {
 export const obtenerClienteId = (id) => {
     return axios.get(`${apiUrl}/${id}`)
 }
-
+    
 export const actualizarCliente = (id,data) => {
     return axios.put(`${apiUrl}/${id}`,data)
 };

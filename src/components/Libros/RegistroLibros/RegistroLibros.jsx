@@ -1,45 +1,74 @@
 import React, { useState, useRef } from "react";
 import "./RegistroLibros.css";
+import { crearLibro } from "../../../services/libroServices";
+import Joi from "joi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const RegistroLibros = () => {
   const [book, setBook] = useState({
     isbn: "",
-    title: "",
-    description: "",
-    cover: null,
-    coverName: "",
-    author: "",
+    titulo: "",
+    descripcion: "",
+    portada: "",
+    autor: "",
   });
+  const navigate = useNavigate();
 
-  const fileInputRef = useRef(null);
+  const schema = {
+    isbn: Joi.string().required(),
+    titulo: Joi.string().required(),
+    descripcion: Joi.string().required(),
+    portada: Joi.string().required(),
+    autor: Joi.string().required(),
+  };
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, value } = e.target;
 
-    const file = files && files[0];
     setBook((prevState) => ({
       ...prevState,
-      [name]: name === "cover" ? file : value,
-      coverName: name === "cover" && file ? file.name : prevState.coverName,
+      [name]: value,
     }));
   };
-
-  const handleCoverClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleSubmit = (e) => {
+  console.log(book);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(book);
-    setBook({
-      isbn: "",
-      title: "",
-      description: "",
-      cover: null,
-      coverName: "",
-      author: "",
-    });
+
+    // Validar datos con Joi
+    const { error } = Joi.object(schema).validate(book, { abortEarly: false });
+
+    if (error) {
+      console.error("Error de validación:", error.details);
+      return;
+    }
+
+    try {
+      // Llama a la función del servicio para enviar la solicitud POST
+      await crearLibro(book);
+
+      toast.success("Libro creado con éxito");
+      console.log("libro creado");
+      navigate("/");
+    } catch (error) {
+      console.error("Error al enviar el formulario:", error);
+      toast.error("Error al crear el libro");
+      // Manejar los errores según sea necesario
+    }
   };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(book);
+  //   setBook({
+  //     isbn: "",
+  //     title: "",
+  //     descripcion: "",
+  //     portada: null,
+  //     portadaName: "",
+  //     autor: "",
+  //   });
+  // };
 
   return (
     <div className="book-form-container">
@@ -64,54 +93,51 @@ const RegistroLibros = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="title">Título:</label>
+          <label htmlFor="titulo">Título:</label>
           <input
             type="text"
-            id="title"
-            name="title"
-            value={book.title}
+            id="titulo"
+            name="titulo"
+            value={book.titulo}
             onChange={handleChange}
             required
           />
         </div>
         <div className="form-group">
-          <label htmlFor="description">Descripción:</label>
+          <label htmlFor="descripcion">Descripción:</label>
           <textarea
-            id="description"
-            name="description"
-            value={book.description}
+            id="descripcion"
+            name="descripcion"
+            value={book.descripcion}
             onChange={handleChange}
             required
           ></textarea>
         </div>
         <div className="form-group">
-          <label htmlFor="cover">Portada:</label>
-          <div className="file-input-container" onClick={handleCoverClick}>
-            {book.coverName || "Subir imagen"}{" "}
-            <input
-              type="file"
-              id="cover"
-              name="cover"
-              accept="image/*"
-              onChange={handleChange}
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              required
-            />
-          </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="author">Autor:</label>
+          <label htmlFor="portada">Portada:</label>
           <input
             type="text"
-            id="author"
-            name="author"
-            value={book.author}
+            id="portada"
+            name="portada"
+            value={book.portada}
             onChange={handleChange}
             required
           />
         </div>
-        <button className="bto" type="submit">Registrar Libro</button>
+        <div className="form-group">
+          <label htmlFor="autor">Autor:</label>
+          <input
+            type="text"
+            id="autor"
+            name="autor"
+            value={book.autor}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button className="bto" type="submit">
+          Registrar Libro
+        </button>
       </form>
     </div>
   );
