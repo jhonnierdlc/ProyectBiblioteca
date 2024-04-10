@@ -5,38 +5,89 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Main = () => {
   const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
     window.location.reload();
+  };
 
-    // Redirige a la página de inici de sesión
+  const handleMouseEnter = () => {
+    setShowMenu(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowMenu(false);
   };
 
   return (
-    <header class="header">
-      <div class="logo">
+    <header className="header">
+      <div className="logo">
         <img src={logo} alt="" />
       </div>
       <nav>
-        <ul class="nav-links">
+        <ul className="nav-links">
           <Link to="/Inicio">
             <li>
-              <a href="#">Inicio </a>
+              <a href="#">Inicio</a>
             </li>
           </Link>
-          <li>
+          <li
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className="dropdown"
+          >
+            <a href="#">Registrar</a>
+            {showMenu && (
+              <div className="dropdown-menu">
+                <ul>
+                  <Link  to="/Registro-Usuario">
+                    <li>
+                      <a href="#">Usuario</a>
+                    </li>
+                  </Link>
+                  <Link to="/Registro-Libros">
+                    <li>
+                      <a href="#"> Libros</a>
+                    </li>
+                  </Link>
+                </ul>
+              </div>
+            )}
+          </li>
+
+          <li
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className="dropdown"
+          >
             <a href="#">Consultar</a>
+            {showMenu && (
+              <div className="dropdown-menu">
+                <ul>
+                  <Link to="/Consulta-Usuario">
+                    <li>
+                      <a href="#">Usuario</a>
+                    </li>
+                  </Link>
+                  <Link to="/Consulta-Libros">
+                    <li>
+                      <a href="#">Libros</a>
+                    </li>
+                  </Link>
+                </ul>
+              </div>
+            )}
           </li>
           <li>
-            <a href="#">Prestamo </a>
+            <a href="#">Prestamo</a>
           </li>
         </ul>
       </nav>
-      <a class="btn" href="#" onClick={handleLogout}>
+      <div className="btn" onClick={handleLogout}>
         <button>Cerrar Sesión</button>
-      </a>
+      </div>
     </header>
   );
 };

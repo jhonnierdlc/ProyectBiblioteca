@@ -8,6 +8,8 @@ import RegistroUsuarios from "./components/Usuarios/RegistroUsuarios/RegistroUsu
 import RegistroLibros from "./components/Libros/RegistroLibros/RegistroLibros";
 import ConsultarUsuarios from "./components/Usuarios/ConsultarUsuarios/ConsultarUsuarios";
 import ConsultarLibro from "./components/Libros/ConsultaLibros/ConsultaLibro";
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const user = localStorage.getItem("token");
@@ -18,6 +20,7 @@ function App() {
       {user && <Main />}
       
       {/* Definir las rutas */}
+      <ToastContainer/>
       <Routes>
         {/* Ruta por defecto - redirigir a /login si el usuario no está autenticado */}
         <Route path="/" element={<Navigate replace to="/login" />} />
