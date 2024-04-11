@@ -8,8 +8,8 @@ function ModalEliminar({ eliminarId, setMostrarModal, idAEliminar }) {
         <div className="modal-content">
           <p>¿Estás seguro de que deseas eliminar?</p>
           <div>
-            <button onClick={() => eliminarId(idAEliminar)}>Sí</button>
-            <button onClick={() => setMostrarModal(false)}>No</button>
+            <button onClick={() => eliminarId(idAEliminar)}>Aceptar</button>
+            <button onClick={() => setMostrarModal(false)}  style={{ marginLeft: '8px', background:"#009879" }} >Cancelar</button>
           </div>
         </div>
       </div>
