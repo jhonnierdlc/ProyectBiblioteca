@@ -34,4 +34,14 @@
   button{
     background: #000;
   }
+
+  .img-pencil{
+   margin-left: 10px;
+  }
   
+  .container-icons{
+    display: flex;
+    justify-content: space-between;
+    margin-top: -10px;
+    margin-bottom: 3px;
+  }
