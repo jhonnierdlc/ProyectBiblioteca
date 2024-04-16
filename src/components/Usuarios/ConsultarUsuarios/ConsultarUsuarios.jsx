@@ -66,7 +66,7 @@ const ConsultarUsuarios = () => {
               <td>{cliente.direccion}</td>
               <td>{cliente.celular}</td>
               <td>
-                <Link to={`/editar/${cliente._id}`}>
+                <Link to={`/EditarUsuario/${cliente._id}`}>
                   <button className='bEditar'>Editar</button> 
                 </Link>
                 <button className='bEliminar' onClick={() => handleDelete(cliente._id)}>Eliminar</button>

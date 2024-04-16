@@ -6,6 +6,7 @@ import Singup from "./components/Singup";
 import Inicio from "./components/Inicio";
 import RegistroUsuarios from "./components/Usuarios/RegistroUsuarios/RegistroUsuarios";
 import RegistroLibros from "./components/Libros/RegistroLibros/RegistroLibros";
+import EditarUsuario from "./components/Usuarios/EditarUsuario";
 import ConsultarUsuarios from "./components/Usuarios/ConsultarUsuarios/ConsultarUsuarios";
 import ConsultarLibro from "./components/Libros/ConsultaLibros/ConsultaLibro";
 import 'react-toastify/dist/ReactToastify.css';
@@ -31,6 +32,7 @@ function App() {
             <Route path="/Inicio" element={<Inicio />} />
             <Route path="/Registro-Usuario" element={<RegistroUsuarios />} />
             <Route path="/Consulta-Usuario" element={<ConsultarUsuarios />} />
+            <Route path="/EditarUsuario/:id" element={<EditarUsuario />} />
             <Route path="/Consulta-Libros" element={<ConsultarLibro />} />
             <Route path="/Registro-Libros" element={<RegistroLibros />} />
           </>
