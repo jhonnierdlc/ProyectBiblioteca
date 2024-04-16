@@ -3,17 +3,25 @@ import "./ConsultaLibro.css";
 import { Link } from "react-router-dom";
 import { eliminarLibro, obtenerLibro } from "../../../services/libroServices";
 import ModalEliminar from "../../UI/ModalEliminar";
+
 import { toast } from "react-toastify";
+import ModalEditarLibros from "../EditarLibros/ModalEditarLibros";
 
 const ConsultarLibro = () => {
-  const [mostrarModal, setMostrarModal] = useState(false);
+  const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
+  const [mostrarModalEditar, setMostrarModalEditar] = useState(false);
   const [idAEliminar, setIdAEliminar] = useState(null);
-
   const [libros, setLibros] = useState([]);
+  const [libroAEditar, setLibroAEditar] = useState(null);
 
   const handleEliminarClick = (id) => {
     setIdAEliminar(id);
-    setMostrarModal(true);
+    setMostrarModalEliminar(true);
+  };
+
+  const handleEditarClick = (libro) => {
+    setLibroAEditar(libro);
+    setMostrarModalEditar(true);
   };
 
   const handleAceptarEliminar = async (id) => {
@@ -27,16 +35,15 @@ const ConsultarLibro = () => {
       toast.error(error.response?.data || "Error al eliminar Libro");
       setLibros(originalData);
     } finally {
-      setMostrarModal(false);
+      setMostrarModalEliminar(false);
     }
-    setMostrarModal(false);
+    setMostrarModalEliminar(false);
   };
 
   useEffect(() => {
-    // Realiza la solicitud para obtener la lista de libros cuando el componente se monte
     obtenerLibro()
       .then((response) => {
-        setLibros(response.data); // Actualiza el estado con los datos de los libros recibidos
+        setLibros(response.data);
       })
       .catch((error) => {
         console.error("Error al obtener los libros:", error);
@@ -52,7 +59,7 @@ const ConsultarLibro = () => {
       setExpandedBooks([...expandedBooks, index]);
     }
   };
-  console.log(libros);
+
   return (
     <>
       <div className="libros-container">
@@ -69,7 +76,10 @@ const ConsultarLibro = () => {
                   height={20}
                 />
               </Link>
-              <Link className="img-pencil">
+              <Link
+                className="img-pencil"
+                onClick={() => handleEditarClick(libro)}
+              >
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/51/51648.png"
                   alt="Pencil"
@@ -110,11 +120,18 @@ const ConsultarLibro = () => {
           </div>
         ))}
       </div>
-      {mostrarModal && (
+      {mostrarModalEliminar && (
         <ModalEliminar
           eliminarId={handleAceptarEliminar}
-          setMostrarModal={setMostrarModal}
+          setMostrarModal={setMostrarModalEliminar}
           idAEliminar={idAEliminar}
+        />
+      )}
+      {mostrarModalEditar && (
+        <ModalEditarLibros
+          libro={libroAEditar}
+          isOpen={mostrarModalEditar}
+          closeModal={() => setMostrarModalEditar(false)}
         />
       )}
     </>
