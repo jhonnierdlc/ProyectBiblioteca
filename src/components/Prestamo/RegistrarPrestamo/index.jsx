@@ -88,13 +88,13 @@ const Prestamo = () => {
               <span class="details">
                 Libro Seleccionado
               </span>
-              <input type="text" placeholder="" required name="titulo" value={data.titulo} />
+              <input type="text" placeholder="" required name="titulo"  readOnly value={data.titulo} />
             </div>
             <div class="input-box">
               <span class="details">
                 Isbn
               </span>
-              <input type="text" placeholder="" required name="isbn" value={data.isbn} />
+              <input type="text" placeholder="" required name="isbn"  readOnly value={data.isbn} />
             </div>
             <div class="input-box">
               <span class="details">
