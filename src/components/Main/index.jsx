@@ -80,9 +80,12 @@ const Main = () => {
               </div>
             )}
           </li>
+          <Link to="/SeleccionPrestamo">
           <li>
             <a href="#">Prestamo</a>
           </li>
+          </Link>
+         
         </ul>
       </nav>
       <div className="btn" onClick={handleLogout}>

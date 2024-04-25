@@ -1,0 +1,17 @@
+.libroo {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 180px; /* Ancho fijo del contenedor */
+    height: 220px; /* Altura fija del contenedor */
+    margin: auto; /* Centrar el contenedor horizontalmente */
+}
+
+.portada-libroo {
+    width: 100%; /* La imagen ocupará todo el ancho del contenedor */
+    height: 100%; /* La imagen ocupará toda la altura del contenedor */
+    object-fit: cover; /* La imagen cubrirá todo el contenedor manteniendo su relación de aspecto */
+    border-radius: 5px; /* Borde redondeado para la imagen */
+}
+

@@ -9,6 +9,8 @@ import RegistroLibros from "./components/Libros/RegistroLibros/RegistroLibros";
 import EditarUsuario from "./components/Usuarios/EditarUsuario";
 import ConsultarUsuarios from "./components/Usuarios/ConsultarUsuarios/ConsultarUsuarios";
 import ConsultarLibro from "./components/Libros/ConsultaLibros/ConsultaLibro";
+import SeleccionPrestamo from "./components/Prestamo/SelecionPrestamo";
+import RegistrarPrestamo from "./components/Prestamo/RegistrarPrestamo";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 
@@ -35,6 +37,8 @@ function App() {
             <Route path="/EditarUsuario/:id" element={<EditarUsuario />} />
             <Route path="/Consulta-Libros" element={<ConsultarLibro />} />
             <Route path="/Registro-Libros" element={<RegistroLibros />} />
+            <Route path="/SeleccionPrestamo" element={<SeleccionPrestamo />} />
+            <Route path="/RegistrarPrestamo/:id" element={<RegistrarPrestamo />} />
           </>
         )}
 
