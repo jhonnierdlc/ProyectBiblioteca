@@ -1,0 +1,30 @@
+
+  
+  .contenedor {
+    /* Estilos para el contenedor principal */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .texto {
+    max-width: 600px; /* Ancho máximo del contenedor de texto */
+    text-align: center; /* Alineación del texto al centro */
+    margin-top: 20px; /* Margen superior para separar del logo */
+  }
+  
+  .hom {
+    margin-top: 40px;
+    width: 300px; /* Ancho deseado para la imagen */
+    height: 500px; /* Altura automática para mantener la proporción */
+    margin-bottom: 10px; /* Margen inferior para separar del texto */
+  }
+  
+  .mensaje {
+    /* Estilos para el mensaje de texto */
+    font-size: 16px; /* Tamaño de fuente del mensaje */
+    line-height: 1.5; /* Altura de línea para mejorar la legibilidad */
+  }
+  
+ 
+  

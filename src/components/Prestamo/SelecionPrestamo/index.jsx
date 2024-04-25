@@ -32,7 +32,7 @@ const Seleccion = () => {
 
   return (
     <div>
-      <div className="titlee">Buscar Libro</div>
+      <div className="titlee">Seleccionar Libro</div>
 
       <div className="input-boxx">
         <input
