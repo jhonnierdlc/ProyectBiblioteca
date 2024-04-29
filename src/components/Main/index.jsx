@@ -85,6 +85,29 @@ const Main = () => {
             <a href="#">Prestamo</a>
           </li>
           </Link>
+          <li
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className="dropdown"
+          >
+            <a href="#">Multas</a>
+            {showMenu && (
+              <div className="dropdown-menu">
+                <ul>
+                  <Link to="/RegistrarMulta">
+                    <li>
+                      <a href="#">Registrar</a>
+                    </li>
+                  </Link>
+                  <Link to="/ConsultarMulta">
+                    <li>
+                      <a href="#">Consultar</a>
+                    </li>
+                  </Link>
+                </ul>
+              </div>
+            )}
+          </li>
          
         </ul>
       </nav>
