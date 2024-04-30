@@ -3,7 +3,8 @@ import "./ConsultaLibro.css";
 import { Link } from "react-router-dom";
 import { eliminarLibro, obtenerLibro } from "../../../services/libroServices";
 import ModalEliminar from "../../UI/ModalEliminar";
-
+import { FaTrash } from "react-icons/fa";
+import { GoPencil } from "react-icons/go";
 import { toast } from "react-toastify";
 import ModalEditarLibros from "../EditarLibros/ModalEditarLibros";
 
@@ -62,6 +63,11 @@ const ConsultarLibro = () => {
 
   return (
     <>
+      <div class="search-container">
+        <input type="text" placeholder="Titulo" />
+        <input type="text" placeholder="Categoria" />
+        <input type="text" placeholder="Autor" />
+      </div>
       <div className="libros-container">
         {libros.map((libro, index) => (
           <div className="libro" key={index}>
@@ -70,21 +76,13 @@ const ConsultarLibro = () => {
                 className="img-delete"
                 onClick={() => handleEliminarClick(libro._id)}
               >
-                <img
-                  src="https://cdn.icon-icons.com/icons2/1808/PNG/512/trash-can_115312.png"
-                  alt="Eliminar"
-                  height={20}
-                />
+                <FaTrash size={20} color="red" />
               </Link>
               <Link
                 className="img-pencil"
                 onClick={() => handleEditarClick(libro)}
               >
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/51/51648.png"
-                  alt="Pencil"
-                  height={20}
-                />
+                <GoPencil size={20} />
               </Link>
             </div>
 
