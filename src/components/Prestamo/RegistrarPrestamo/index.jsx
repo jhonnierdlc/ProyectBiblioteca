@@ -2,25 +2,27 @@ import React, { useState, useEffect } from 'react';
 import "./styles.css";
 import Joi from 'joi';
 import { toast } from 'react-toastify';
-import { obtenerLibroId, actualizarCliente } from "../../../services/libroServices";
+import { registrarPrestamo } from "../../../services/prestamoServices";
+import { obtenerLibroId } from "../../../services/libroServices";
 import { useParams, useNavigate } from 'react-router-dom';
-
 
 const Prestamo = () => {
   const [data, setData] = useState({ isbn: "", titulo: "", descripcion: "", portada: "", autor: "" });
+  const [prestamo, setPrestamo] = useState({
+    libroId:"",
+    cedula: "",
+    nombre: "",
+    celular: "",
+  });
   const { id } = useParams();
   const navigate = useNavigate();
 
   const schema = {
-    isbn: Joi.string().required(),
-    titulo: Joi.string().required(),
-    descripcion: Joi.string().required(),
-    portada: Joi.string().required(),
-    autor: Joi.string().required(),
+    libroId: Joi.string().required(),
+    cedula: Joi.string().required(),
+    nombre: Joi.string().required(),
+    celular: Joi.string().required(),
   };
-
-
-
 
   useEffect(() => {
     async function fetchData() {
@@ -32,9 +34,12 @@ const Prestamo = () => {
           descripcion: libro.descripcion,
           portada: libro.portada,
           autor: libro.autor,
-
         };
         setData(updatedData);
+        setPrestamo(prevState => ({
+          ...prevState,
+          libroId: id  // Asignamos el valor de id a libroId
+        }));
       } catch (error) {
         toast.error(error.response?.data || 'Error al obtener datos del cliente');
         console.error(error);
@@ -44,10 +49,18 @@ const Prestamo = () => {
     fetchData();
   }, [id]);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPrestamo((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { error } = Joi.object(schema).validate(data, { abortEarly: false });
+    const { error } = Joi.object(schema).validate(prestamo, { abortEarly: false });
 
     if (error) {
       console.error('Error de validación:', error.details);
@@ -55,26 +68,19 @@ const Prestamo = () => {
     }
 
     try {
-
+      await registrarPrestamo(prestamo);
+      toast.success('Préstamo registrado exitosamente');
+      navigate('/Inicio');
     } catch (error) {
-      console.error('Error al actualizar el cliente:', error);
-      toast.error('Error al actualizar el cliente');
+      console.error('Error al registrar el préstamo:', error);
+      toast.error('Error al registrar el préstamo');
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-
   return (
     <div className="bdy">
-      <div class="containerr" style={{ marginTop:"100px"}}>
-        <div class="title"> Registro de Prestamo </div>
+      <div className="containerr" style={{ marginTop:"100px"}}>
+        <div className="title"> Registro de Préstamo </div>
         <div className="libroo">
           <img
             src={data.portada}
@@ -82,42 +88,33 @@ const Prestamo = () => {
             className="portada-libroo"
           />
         </div>
-        <form>
-          <div class="user-details">
-            <div class="input-box">
-              <span class="details">
-                Libro Seleccionado
-              </span>
-              <input type="text" placeholder="" required name="titulo"  readOnly value={data.titulo} />
+        <form onSubmit={handleSubmit}>
+          
+          <div className="user-details">
+          <div className="input-box">
+              <span className="details">Título del Libro</span>
+              <input type="text" placeholder="" readOnly value={data.titulo} />
             </div>
-            <div class="input-box">
-              <span class="details">
-                Isbn
-              </span>
-              <input type="text" placeholder="" required name="isbn"  readOnly value={data.isbn} />
+            <div className="input-box">
+              <span className="details">ISBN del Libro</span>
+              <input type="text" placeholder="" readOnly value={data.isbn} />
             </div>
-            <div class="input-box">
-              <span class="details">
-                Cedula Cliente
-              </span>
-              <input type="text" placeholder="Digite la cedula" required name="cedula" />
+            <div className="input-box">
+              <span className="details">Cédula Cliente</span>
+              <input type="text" placeholder="Digite la cédula" required name="cedula" value={prestamo.cedula} onChange={handleChange} />
             </div>
-            <div class="input-box">
-              <span class="details">
-                Nombre Cliente
-              </span>
-              <input type="text" placeholder="Digite el nombre" required name="nombre" />
+            <div className="input-box">
+              <span className="details">Nombre Cliente</span>
+              <input type="text" placeholder="Digite el nombre" required name="nombre" value={prestamo.nombre} onChange={handleChange} />
             </div>
-
-            <div class="input-box">
-              <span class="details">
-                Celular
-              </span>
-              <input type="text" placeholder="Digite el celular" required name="celular" />
+            <div className="input-box">
+              <span className="details">Celular</span>
+              <input type="text" placeholder="Digite el celular" required name="celular" value={prestamo.celular} onChange={handleChange} />
             </div>
+           
           </div>
-          <div class="button">
-            <input type="submit" class="btt" value="Registrar" />
+          <div className="button">
+            <input type="submit" className="btt" value="Registrar" />
           </div>
         </form>
       </div>
