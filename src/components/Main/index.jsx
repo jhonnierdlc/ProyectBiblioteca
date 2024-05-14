@@ -94,7 +94,7 @@ const Main = () => {
             {showMenu && (
               <div className="dropdown-menu">
                 <ul>
-                  <Link to="/RegistrarMulta">
+                  <Link to="/SeleccionMulta">
                     <li>
                       <a href="#">Registrar</a>
                     </li>
