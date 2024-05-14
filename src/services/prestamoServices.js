@@ -6,3 +6,6 @@ export const registrarPrestamo = (data) => {
     return axios.post(apiUrl,data)
 };
 
+export const obtenerPrestamo = () => {
+    return axios.get(apiUrl)
+};

@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { crearCliente } from "../../../services/clienteServices";
-import Joi from 'joi';
-import { toast } from 'react-toastify';
+import Joi from "joi";
+import { toast } from "react-toastify";
 import "./RegistroUsuario.css";
 
 function RegistroUsuarios() {
-  const [data, setData] = useState({ cedula: "", nombre: "", edad: "", direccion: "",celular: "" });
+  const [data, setData] = useState({
+    cedula: "",
+    nombre: "",
+    edad: "",
+    direccion: "",
+    celular: "",
+  });
   const navigate = useNavigate();
 
   const schema = {
@@ -28,36 +34,33 @@ function RegistroUsuarios() {
       return;
     }
 
-   
-
     try {
       // Llama a la función del servicio para enviar la solicitud POST
       await crearCliente(data);
 
       toast.success("Cliente creado con éxito");
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error("Error al enviar el formulario:", error);
       toast.error("Error al crear el cliente");
       // Manejar los errores según sea necesario
     }
-  }
+  };
 
   const handleChange = (e) => {
     // Actualizar el estado 'data' al escribir en los campos del formulario
     const { name, value } = e.target;
 
     // Validar si la entrada es un número para el campo de edad
-    if (name === 'edad' && isNaN(value)) {
+    if (name === "edad" && isNaN(value)) {
       return; // No actualices el estado si no es un número
     }
 
-    setData(prevData => ({
+    setData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
-  }
-
+  };
 
   return (
     <div className="bdy">
@@ -66,39 +69,69 @@ function RegistroUsuarios() {
         <form>
           <div class="user-details">
             <div class="input-box">
-              <span class="details">
-                Cedula
-              </span>
-              <input type="text" placeholder="Digite la cedula" required name="cedula"  value={data.cedula} onChange={handleChange}/>
+              <span class="details">Cedula</span>
+              <input
+                type="number"
+                placeholder="Digite la cedula"
+                required
+                name="cedula"
+                value={data.cedula}
+                onChange={handleChange}
+              />
             </div>
             <div class="input-box">
-              <span class="details">
-                Nombre Completo
-              </span>
-              <input type="text" placeholder="Escriba el nombre" required name="nombre"  value={data.nombre} onChange={handleChange} />
+              <span class="details">Nombre Completo</span>
+              <input
+                type="text"
+                placeholder="Escriba el nombre"
+                required
+                name="nombre"
+                value={data.nombre}
+                onChange={handleChange}
+              />
             </div>
             <div class="input-box">
-              <span class="details">
-                Edad
-              </span>
-              <input type="text" placeholder="Digite la edad" required name="edad" value={data.edad} onChange={handleChange}/>
+              <span class="details">Edad</span>
+              <input
+                type="text"
+                placeholder="Digite la edad"
+                required
+                name="edad"
+                value={data.edad}
+                onChange={handleChange}
+              />
             </div>
             <div class="input-box">
-              <span class="details">
-                Direccion
-              </span>
-              <input type="text" placeholder="Digite la direccion" required name="direccion" value={data.direccion} onChange={handleChange}/>
+              <span class="details">Direccion</span>
+              <input
+                type="text"
+                placeholder="Digite la direccion"
+                required
+                name="direccion"
+                value={data.direccion}
+                onChange={handleChange}
+              />
             </div>
-            
+
             <div class="input-box">
-              <span class="details">
-                Celular
-              </span>
-              <input type="text" placeholder="Digite el celular" required name="celular" value={data.celular} onChange={handleChange} />
+              <span class="details">Celular</span>
+              <input
+                type="number"
+                placeholder="Digite el celular"
+                required
+                name="celular"
+                value={data.celular}
+                onChange={handleChange}
+              />
             </div>
           </div>
           <div class="button">
-            <input type="submit" class="btt" value="Registrar" onClick={handleSubmit} />
+            <input
+              type="submit"
+              class="btt"
+              value="Registrar"
+              onClick={handleSubmit}
+            />
           </div>
         </form>
       </div>

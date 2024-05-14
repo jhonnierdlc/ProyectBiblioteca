@@ -84,7 +84,7 @@ const RegistroLibros = () => {
         <div className="form-group">
           <label htmlFor="isbn">Isbn:</label>
           <input
-            type="text"
+            type="number"
             id="isbn"
             name="isbn"
             value={book.isbn}

@@ -42,7 +42,7 @@ const Main = () => {
             {showMenu && (
               <div className="dropdown-menu">
                 <ul>
-                  <Link  to="/Registro-Usuario">
+                  <Link to="/Registro-Usuario">
                     <li>
                       <a href="#">Usuario</a>
                     </li>
@@ -81,9 +81,24 @@ const Main = () => {
             )}
           </li>
           <Link to="/SeleccionPrestamo">
-          <li>
-            <a href="#">Prestamo</a>
-          </li>
+            <li
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className="dropdown"
+            >
+              <a href="#">Prestamo</a>
+              {showMenu && (
+                <div className="dropdown-menu">
+                  <ul>
+                    <Link to="/ConsultarPrestamos">
+                      <li>
+                        <a href="#">Consultar</a>
+                      </li>
+                    </Link>
+                  </ul>
+                </div>
+              )}
+            </li>
           </Link>
           <li
             onMouseEnter={handleMouseEnter}
@@ -108,7 +123,6 @@ const Main = () => {
               </div>
             )}
           </li>
-         
         </ul>
       </nav>
       <div className="btn" onClick={handleLogout}>
