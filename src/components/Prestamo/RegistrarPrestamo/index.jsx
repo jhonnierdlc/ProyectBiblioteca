@@ -111,7 +111,6 @@ const Prestamo = () => {
               <span className="details">Celular</span>
               <input type="text" placeholder="Digite el celular" required name="celular" value={prestamo.celular} onChange={handleChange} />
             </div>
-           
           </div>
           <div className="button">
             <input type="submit" className="btt" value="Registrar" />

@@ -1,0 +1,46 @@
+.titlek {
+    font-size: 25px;
+    font-weight: 500;
+    position: relative;
+    font-weight: bold;
+  }
+  
+  .titlek::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 200px;
+    box-shadow: 7px 13px 90px #39a05d;
+  }
+  
+  .user-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+  }
+  
+  .input-boxk{
+    margin-bottom: 15px;
+    width: calc(1000px / 2 -20px);
+  }
+  
+  .input-boxk .details{
+    display: block;
+    font-weight: 100;
+    margin-bottom: 5px;
+  }
+  
+  .input-boxk input{
+    margin-top: 9px;
+    height: 45px;
+    width: 400px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #39a05d;
+    padding-left: 15px;
+    font-size: 16px;
+  }
+

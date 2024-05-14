@@ -1,105 +1,134 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { crearCliente } from "../../../services/clienteServices";
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { registrarMulta } from "../../../services/multaService";
 import Joi from 'joi';
 import { toast } from 'react-toastify';
 import "./styles.css";
+import { obtenerClienteId } from "../../../services/clienteServices";
 
 function RegistrarMulta() {
-  const [data, setData] = useState({ cedula: "", nombre: "", edad: "", direccion: "",celular: "" });
+  const [data, setData] = useState({ cedula: "", nombre: "", edad: "", direccion: "", celular: "" });
+  const [multa, setMulta] = useState({
+    clienteId: "",
+    libro: "",
+    precio: "",
+    descripcion: "",
+  });
+
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const schema = {
-    cedula: Joi.string().required(),
-    nombre: Joi.string().required(),
-    edad: Joi.string().required(),
-    direccion: Joi.string().required(),
-    celular: Joi.string().required(),
+    clienteId: Joi.string().required(),
+    libro: Joi.string().required(),
+    precio: Joi.string().required(),
+    descripcion: Joi.string().required(),
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data: cliente } = await obtenerClienteId(id);
+        const updatedData = {
+          cedula: cliente.cedula,
+          nombre: cliente.nombre,
+          edad: cliente.edad,
+          direccion: cliente.direccion,
+          celular: cliente.celular,
+        };
+        setData(updatedData);
+        setMulta(prevState => ({
+          ...prevState,
+          clienteId: id
+        }));
+      } catch (error) {
+        toast.error(error.response?.data || 'Error al obtener datos del cliente');
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar datos con Joi
-    const { error } = Joi.object(schema).validate(data, { abortEarly: false });
+    const { error } = Joi.object(schema).validate(multa, { abortEarly: false });
 
     if (error) {
-      console.error("Error de validación:", error.details);
+      console.error('Error de validación:', error.details);
+      toast.error('Error de validación');
       return;
     }
 
-   
-
     try {
-      // Llama a la función del servicio para enviar la solicitud POST
-      await crearCliente(data);
-
-      toast.success("Cliente creado con éxito");
-      navigate('/');
+      await registrarMulta(multa);
+      toast.success('Multa registrada exitosamente');
+      navigate('/Inicio');
     } catch (error) {
-      console.error("Error al enviar el formulario:", error);
-      toast.error("Error al crear el cliente");
-      // Manejar los errores según sea necesario
+      console.error('Error al registrar la multa:', error);
+      toast.error('Error al registrar la multa');
     }
-  }
+  };
 
   const handleChange = (e) => {
-    // Actualizar el estado 'data' al escribir en los campos del formulario
     const { name, value } = e.target;
-
-    // Validar si la entrada es un número para el campo de edad
-    if (name === 'edad' && isNaN(value)) {
-      return; // No actualices el estado si no es un número
-    }
-
-    setData(prevData => ({
-      ...prevData,
-      [name]: value
+    setMulta(prevMulta => ({
+      ...prevMulta,
+      [name]: value,
     }));
-  }
-
+  };
 
   return (
     <div className="bdy">
-      <div class="containerr">
-        <div class="title"> Registro de Multa </div>
-        <form>
-          <div class="user-details">
-            <div class="input-box">
-              <span class="details">
-                Cedula
-              </span>
-              <input type="text" placeholder="Digite la cedula" required name="cedula"  />
+      <div className="containerr">
+        <div className="title"> Registrar Multa </div>
+        <form onSubmit={handleSubmit}>
+          <div className="user-details">
+            <div className="input-box">
+              <span className="details">Cedula</span>
+              <input type="text" readOnly value={data.cedula} />
             </div>
-            <div class="input-box">
-              <span class="details">
-                Nombre Completo
-              </span>
-              <input type="text" placeholder="Escriba el nombre" required name="nombre"   />
+            <div className="input-box">
+              <span className="details">Nombre Completo</span>
+              <input type="text" readOnly value={data.nombre} />
             </div>
-            <div class="input-box">
-              <span class="details">
-                Nombre libro prestado
-              </span>
-              <input type="text" placeholder="Digite titulo" required name="titulo" />
+            <div className="input-box">
+              <span className="details">Titulo libro</span>
+              <input
+                type="text"
+                placeholder="Escriba el titulo"
+                required
+                name="libro"
+                value={multa.libro}
+                onChange={handleChange}
+              />
             </div>
-            <div class="input-box">
-              <span class="details">
-                Valor Multa
-              </span>
-              <input type="text" placeholder="Digite valor" required name="valor" />
+            <div className="input-box">
+              <span className="details">Valor Multa</span>
+              <input
+                type="text"
+                placeholder="Digite valor Multa"
+                required
+                name="precio"
+                value={multa.precio}
+                onChange={handleChange}
+              />
             </div>
-            
-            <div class="input-box">
-              <span class="details">
-                Dias en prestamo
-              </span>
-              <input type="text" placeholder="Digite los dias" required name="dias" 
-               />
+            <div className="input-box">
+              <span className="details">Descripcion</span>
+              <input
+                type="text"
+                placeholder="Escriba la descripcion"
+                required
+                name="descripcion"
+                value={multa.descripcion}
+                onChange={handleChange}
+              />
             </div>
           </div>
-          <div class="button">
-            <input type="submit" class="btt" value="Multar"  />
+          <div className="button">
+            <input type="submit" className="btt" value="Registrar" />
           </div>
         </form>
       </div>
