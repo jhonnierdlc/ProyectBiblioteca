@@ -9,12 +9,12 @@ body{
 }
 
 .header{
-    background-color: #39a05d;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 85px;
-    padding: 5px 10%;
+  background-image: linear-gradient(to left, #6fe685, #c7ffd2);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 85px;
+  padding: 5px 10%;
 }
 
 .header .logo{
@@ -47,12 +47,14 @@ body{
 
 .header .nav-links a{
     font-size: 700;
-    color: #eceff1;
-    text-decoration: none;    
+    color: black;
+    text-decoration: none;   
+    font-weight: 500;
+     
 }
 
 .header .nav-links li a:hover{
-    color: #e2f1f8;
+    color: #02291a;
 }
 
 .header .btn button{
@@ -82,7 +84,7 @@ body{
     text-align: center;
     top: calc(100% + 1px);
     left: 0;
-    background-color: #55a370;
+    background-color: #56d86e;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 100;
     display: none;

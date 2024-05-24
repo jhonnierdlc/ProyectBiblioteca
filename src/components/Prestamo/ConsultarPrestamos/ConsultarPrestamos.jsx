@@ -4,6 +4,7 @@ import "./ConsultarPrestamos.css";
 
 const ConsultarPrestamos = () => {
   const [prestamos, setPrestamos] = useState([]);
+  const [filtroCedula, setFiltroCedula] = useState("");
 
   useEffect(() => {
     obtenerPrestamo()
@@ -15,15 +16,19 @@ const ConsultarPrestamos = () => {
       });
   }, []);
 
+  const prestamosFiltrados = prestamos.filter((prestamo) =>
+    prestamo.cedula.toLowerCase().includes(filtroCedula.toLowerCase())
+  );
+
   return (
     <div>
       <div className="input-filtro-cc">
         <input
           className="input-filtro"
           type="text"
-          name=""
-          placeholder="Cedula"
-          id=""
+          placeholder="Cédula"
+          value={filtroCedula}
+          onChange={(e) => setFiltroCedula(e.target.value)}
         />
       </div>
 
@@ -31,24 +36,28 @@ const ConsultarPrestamos = () => {
         <table className="content-table-prestamo">
           <thead>
             <tr>
-              <th>Cedula</th>
+              <th>Cédula</th>
               <th>Nombre</th>
               <th>Libro</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {prestamos.map((prestamo, index) => (
+            {prestamosFiltrados.length > 0 ? (
+              prestamosFiltrados.map((prestamo, index) => (
+                <tr key={index}>
+                  <td>{prestamo.cedula}</td>
+                  <td>{prestamo.nombre}</td>
+                  <td>{prestamo.libro.titulo}</td>
+                </tr>
+              ))
+            ) : (
               <tr>
-                <td>{prestamo.cedula}</td>
-                <td>{prestamo.nombre}</td>
-                <td>{prestamo.libro.titulo}</td>
-                {/* <td>
-                <button className="bEditar">Aceptar</button>
-                <button className="bEliminar">Cancelar</button>
-              </td> */}
+                <td colSpan="3">
+                  No se encontraron préstamos para la cédula ingresada.
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
