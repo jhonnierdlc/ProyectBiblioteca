@@ -10,7 +10,8 @@ const Inicio = () => {
         <div className="texto">
           <h1>Bienvenido a BiblioSoft</h1>
           <p className="mensaje">
-            Aplicativo administrativo en el cual podrá realizar todas las operaciones correspondientes a la biblioteca.
+            Aplicativo administrativo en el cual podrá realizar todas las
+            operaciones correspondientes a la biblioteca.
           </p>
         </div>
       </div>

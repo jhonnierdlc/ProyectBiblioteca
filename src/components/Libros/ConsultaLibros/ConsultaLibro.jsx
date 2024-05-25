@@ -15,6 +15,10 @@ const ConsultarLibro = () => {
   const [libros, setLibros] = useState([]);
   const [libroAEditar, setLibroAEditar] = useState(null);
 
+  const [tituloFiltro, setTituloFiltro] = useState("");
+  const [categoriaFiltro, setCategoriaFiltro] = useState("");
+  const [autorFiltro, setAutorFiltro] = useState("");
+
   const handleEliminarClick = (id) => {
     setIdAEliminar(id);
     setMostrarModalEliminar(true);
@@ -38,7 +42,6 @@ const ConsultarLibro = () => {
     } finally {
       setMostrarModalEliminar(false);
     }
-    setMostrarModalEliminar(false);
   };
 
   useEffect(() => {
@@ -61,62 +64,93 @@ const ConsultarLibro = () => {
     }
   };
 
+  const filteredLibros = libros.filter((libro) => {
+    const titulo = libro.titulo || ""; // Asegúrate de que título sea una cadena
+    const categoria = libro.categoria || ""; // Asegúrate de que categoría sea una cadena
+    const autor = libro.autor || ""; // Asegúrate de que autor sea una cadena
+    return (
+      titulo.toLowerCase().includes(tituloFiltro.toLowerCase()) &&
+      categoria.toLowerCase().includes(categoriaFiltro.toLowerCase()) &&
+      autor.toLowerCase().includes(autorFiltro.toLowerCase())
+    );
+  });
+
   return (
     <>
-      <div class="search-container">
-        <input type="text" placeholder="Titulo" />
-        <input type="text" placeholder="Categoria" />
-        <input type="text" placeholder="Autor" />
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Titulo"
+          value={tituloFiltro}
+          onChange={(e) => setTituloFiltro(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Categoria"
+          value={categoriaFiltro}
+          onChange={(e) => setCategoriaFiltro(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Autor"
+          value={autorFiltro}
+          onChange={(e) => setAutorFiltro(e.target.value)}
+        />
       </div>
       <div className="libros-container">
-        {libros.map((libro, index) => (
-          <div className="libro" key={index}>
-            <div className="container-icons">
-              <Link
-                className="img-delete"
-                onClick={() => handleEliminarClick(libro._id)}
-              >
-                <FaTrash size={20} color="red" />
-              </Link>
-              <Link
-                className="img-pencil"
-                onClick={() => handleEditarClick(libro)}
-              >
-                <GoPencil size={20} />
-              </Link>
+        {filteredLibros.length > 0 ? (
+          filteredLibros.map((libro, index) => (
+            <div className="libro" key={index}>
+              <div className="container-icons">
+                <Link
+                  className="img-delete"
+                  onClick={() => handleEliminarClick(libro._id)}
+                >
+                  <FaTrash size={20} color="red" />
+                </Link>
+                <Link
+                  className="img-pencil"
+                  onClick={() => handleEditarClick(libro)}
+                >
+                  <GoPencil size={20} />
+                </Link>
+              </div>
+              <img
+                src={libro.portada}
+                alt="Portada del libro"
+                className="portada-libro"
+              />
+              <div className="info-libro">
+                <h3>{libro.titulo}</h3>
+                <p>
+                  <strong>ISBN:</strong> {libro.isbn}
+                </p>
+                <p>
+                  <strong>Autor:</strong> {libro.autor}
+                </p>
+                <p>
+                  <strong>Descripción:</strong>{" "}
+                  {libro.descripcion.length > 100
+                    ? expandedBooks.includes(index)
+                      ? libro.descripcion
+                      : `${libro.descripcion.slice(0, 100)}... `
+                    : libro.descripcion}
+                  {libro.descripcion.length > 100 && (
+                    <Link onClick={() => toggleDescription(index)}>
+                      {expandedBooks.includes(index)
+                        ? "[Leer menos]"
+                        : "[Leer más]"}
+                    </Link>
+                  )}
+                </p>
+              </div>
             </div>
-
-            <img
-              src={libro.portada}
-              alt="Portada del libro"
-              className="portada-libro"
-            />
-            <div className="info-libro">
-              <h3>{libro.titulo}</h3>
-              <p>
-                <strong>ISBN:</strong> {libro.isbn}
-              </p>
-              <p>
-                <strong>Autor:</strong> {libro.autor}
-              </p>
-              <p>
-                <strong>Descripción:</strong>{" "}
-                {libro.descripcion.length > 100
-                  ? expandedBooks.includes(index)
-                    ? libro.descripcion
-                    : `${libro.descripcion.slice(0, 100)}... `
-                  : libro.descripcion}
-                {libro.descripcion.length > 100 && (
-                  <Link onClick={() => toggleDescription(index)}>
-                    {expandedBooks.includes(index)
-                      ? "[Leer menos]"
-                      : "[Leer más]"}
-                  </Link>
-                )}
-              </p>
-            </div>
+          ))
+        ) : (
+          <div className="no-libros">
+            <p>No se encontraron libros para el filtro aplicado.</p>
           </div>
-        ))}
+        )}
       </div>
       {mostrarModalEliminar && (
         <ModalEliminar

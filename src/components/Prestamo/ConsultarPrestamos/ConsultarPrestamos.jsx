@@ -8,6 +8,7 @@ import ModalEliminar from "../../UI/ModalEliminar";
 
 const ConsultarPrestamos = () => {
   const [prestamos, setPrestamos] = useState([]);
+  const [filtroCedula, setFiltroCedula] = useState("");
   const [mostrarModal, setMostrarModal] = useState(false); // Nuevo estado para mostrar/ocultar el modal
   const [idAEliminar, setIdAEliminar] = useState(null); // Estado para almacenar el ID del cliente a eliminar
 
@@ -20,6 +21,10 @@ const ConsultarPrestamos = () => {
         console.error("Error al obtener los libros:", error);
       });
   }, []);
+
+  const prestamosFiltrados = prestamos.filter((prestamo) =>
+    prestamo.cedula.toLowerCase().includes(filtroCedula.toLowerCase())
+  );
 
   const formatearFecha = (fechaIso) => {
     const fecha = new Date(fechaIso);
@@ -48,11 +53,23 @@ const ConsultarPrestamos = () => {
 
   return (
     <div>
+      <div className="input-filtro-cc">
+        <input
+          className="input-filtro"
+          type="text"
+          placeholder="Cédula"
+          value={filtroCedula}
+          onChange={(e) => setFiltroCedula(e.target.value)}
+        />
+      </div>
+
+      <div className="contenedor-prestamos">
+        <table className="content-table-prestamo">
       <div className="contenedor">
         <table className="content-table">
           <thead>
             <tr>
-              <th>Cedula</th>
+              <th>Cédula</th>
               <th>Nombre</th>
               <th>Libro</th>
               <th>Fecha Prestamo</th>
@@ -61,6 +78,19 @@ const ConsultarPrestamos = () => {
             </tr>
           </thead>
           <tbody>
+            {prestamosFiltrados.length > 0 ? (
+              prestamosFiltrados.map((prestamo, index) => (
+                <tr key={index}>
+                  <td>{prestamo.cedula}</td>
+                  <td>{prestamo.nombre}</td>
+                  <td>{prestamo.libro.titulo}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">
+                  No se encontraron préstamos para la cédula ingresada.
+                </td>
             {prestamos.map((prestamo, index) => (
               <tr key={index}>
                 <td>{prestamo.cedula}</td>
@@ -75,7 +105,7 @@ const ConsultarPrestamos = () => {
                   <button className='bEliminar' onClick={() => handleDelete(prestamo._id)}>Eliminar</button>
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
         {mostrarModal && (
