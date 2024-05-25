@@ -80,26 +80,29 @@ const Main = () => {
               </div>
             )}
           </li>
-          <Link to="/SeleccionPrestamo">
-            <li
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              className="dropdown"
-            >
-              <a href="#">Prestamo</a>
-              {showMenu && (
-                <div className="dropdown-menu">
-                  <ul>
-                    <Link to="/ConsultarPrestamos">
-                      <li>
-                        <a href="#">Consultar</a>
-                      </li>
-                    </Link>
-                  </ul>
-                </div>
-              )}
-            </li>
-          </Link>
+          <li
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            className="dropdown"
+          >
+            <a href="#">Prestamo</a>
+            {showMenu && (
+              <div className="dropdown-menu">
+                <ul>
+                  <Link to="/SeleccionPrestamo">
+                    <li>
+                      <a href="#">Registrar</a>
+                    </li>
+                  </Link>
+                  <Link to="/ConsultarPrestamos">
+                    <li>
+                      <a href="#">Consultar</a>
+                    </li>
+                  </Link>
+                </ul>
+              </div>
+            )}
+          </li>
           <li
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { obtenerPrestamo } from "../../../services/prestamoServices";
+import { obtenerPrestamo, eliminarPrestamo } from "../../../services/prestamoServices";
 import "./ConsultarPrestamos.css";
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import ModalEliminar from "../../UI/ModalEliminar";
+
 
 const ConsultarPrestamos = () => {
   const [prestamos, setPrestamos] = useState([]);
+  const [mostrarModal, setMostrarModal] = useState(false); // Nuevo estado para mostrar/ocultar el modal
+  const [idAEliminar, setIdAEliminar] = useState(null); // Estado para almacenar el ID del cliente a eliminar
 
   useEffect(() => {
     obtenerPrestamo()
@@ -15,42 +21,70 @@ const ConsultarPrestamos = () => {
       });
   }, []);
 
+  const formatearFecha = (fechaIso) => {
+    const fecha = new Date(fechaIso);
+    return fecha.toLocaleDateString('es-ES', { timeZone: 'UTC' }); // Especificar el uso de la zona horaria UTC
+  };
+
+  const handleDelete = async (id) => {
+    setIdAEliminar(id); // Establece el ID del cliente a eliminar
+    setMostrarModal(true); // Muestra el modal de confirmación
+  };
+
+  const confirmarEliminacion = async (id) => {
+    const originalData = [...prestamos];
+    try {
+      const updatedPrestamos = originalData.filter((prestamo) => prestamo._id !== id);
+      setPrestamos(updatedPrestamos);
+      const response = await eliminarPrestamo(id);
+      toast.success(response.data);
+    } catch (error) {
+      toast.error(error.response?.data || 'Error al eliminar cliente');
+      setPrestamos(originalData);
+    } finally {
+      setMostrarModal(false); // Oculta el modal después de la operación
+    }
+  };
+
   return (
     <div>
-      <div className="input-filtro-cc">
-        <input
-          className="input-filtro"
-          type="text"
-          name=""
-          placeholder="Cedula"
-          id=""
-        />
-      </div>
-
-      <div className="contenedor-prestamos">
-        <table className="content-table-prestamo">
+      <div className="contenedor">
+        <table className="content-table">
           <thead>
             <tr>
               <th>Cedula</th>
               <th>Nombre</th>
               <th>Libro</th>
+              <th>Fecha Prestamo</th>
+              <th>Fecha Devolucion</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             {prestamos.map((prestamo, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{prestamo.cedula}</td>
                 <td>{prestamo.nombre}</td>
                 <td>{prestamo.libro.titulo}</td>
-                {/* <td>
-                <button className="bEditar">Aceptar</button>
-                <button className="bEliminar">Cancelar</button>
-              </td> */}
+                <td>{formatearFecha(prestamo.fecha_inicio)}</td>
+                <td>{formatearFecha(prestamo.fecha_devolucion)}</td>
+                <td>
+                  <Link to={`/EditarPrestamo/${prestamo._id}`}>
+                    <button className='bEditar'>Editar</button>
+                  </Link>
+                  <button className='bEliminar' onClick={() => handleDelete(prestamo._id)}>Eliminar</button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {mostrarModal && (
+        <ModalEliminar
+          eliminarId={confirmarEliminacion}
+          setMostrarModal={setMostrarModal}
+          idAEliminar={idAEliminar}
+        />
+      )}
       </div>
     </div>
   );

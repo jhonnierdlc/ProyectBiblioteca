@@ -1,39 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import Joi from 'joi';
 import { toast } from 'react-toastify';
-import { obtenerClienteId, actualizarCliente } from "../../../services/clienteServices";
+import { obtenerMultaPorId, actualizarMulta } from "../../../services/multaService";
 import { useParams, useNavigate } from 'react-router-dom';
 
-
 function EditarMulta() {
-    const [data, setData] = useState({ cedula: "", nombre: "", edad: "", direccion: "", celular: "" });
+    const [data, setData] = useState({ libro: "", descripcion: "", precio: "", estado: "", cliente: { cedula: "" } });
     const { id } = useParams();
     const navigate = useNavigate();
 
     const schema = {
-        cedula: Joi.string().required(),
-        nombre: Joi.string().required(),
-        edad: Joi.alternatives().try(Joi.string(), Joi.number()).required(),
-        direccion: Joi.string().required(),
-        celular: Joi.alternatives().try(Joi.string(), Joi.number()).required(),
+        libro: Joi.string().required(),
+        cliente: Joi.object().required(),
+        descripcion: Joi.string().required(),
+        precio: Joi.string().required(),
+        estado: Joi.string().required(),
     };
-
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const { data: cliente } = await obtenerClienteId(id);
+                const { data: multa } = await obtenerMultaPorId(id);
                 const updatedData = {
-                    cedula: cliente.cedula,
-                    nombre: cliente.nombre,
-                    edad: cliente.edad,
-                    direccion: cliente.direccion,
-                    celular: cliente.celular,
-
+                    libro: multa.libro,
+                    descripcion: multa.descripcion,
+                    precio: multa.precio,
+                    estado: multa.estado,
+                    cliente: multa.cliente,
                 };
                 setData(updatedData);
             } catch (error) {
-                toast.error(error.response?.data || 'Error al obtener datos del cliente');
+                toast.error(error.response?.data || 'Error al obtener datos de la multa');
                 console.error(error);
             }
         }
@@ -48,16 +45,17 @@ function EditarMulta() {
 
         if (error) {
             console.error('Error de validación:', error.details);
+            toast.error('Error de validación');
             return;
         }
 
         try {
-            await actualizarCliente(id, data);
-            toast.success('Cliente actualizado con éxito');
-            navigate('/Consulta-Usuario');
+            await actualizarMulta(id, data);
+            toast.success('Multa actualizada con éxito');
+            navigate('/ConsultarMulta');
         } catch (error) {
-            console.error('Error al actualizar el cliente:', error);
-            toast.error('Error al actualizar el cliente');
+            console.error('Error al actualizar la multa:', error);
+            toast.error('Error al actualizar la multa');
         }
     };
 
@@ -65,52 +63,74 @@ function EditarMulta() {
         const { name, value } = e.target;
         setData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: value
         }));
     };
 
-
     return (
         <div className="bdy">
-            <div class="containerr">
-                <div class="title"> Editar Multa </div>
-                <form>
-                    <div class="user-details">
-                        <div class="input-box">
-                            <span class="details">
-                                Cedula
-                            </span>
-                            <input type="text" placeholder="Digite la cedula" required name="cedula" />
+            <div className="containerr">
+                <div className="title">Editar Multa</div>
+                <form onSubmit={handleSubmit}>
+                    <div className="user-details">
+                        <div className="input-box">
+                            <span className="details">Cedula</span>
+                            <input
+                                type="text"
+                                placeholder="Cedula"
+                                required
+                                name="cedula"
+                                value={data.cliente.cedula}
+                                readOnly
+                            />
                         </div>
-                        <div class="input-box">
-                            <span class="details">
-                                Nombre Completo
-                            </span>
-                            <input type="text" placeholder="Escriba el nombre" required name="nombre" />
+                        <div className="input-box">
+                            <span className="details">Libro</span>
+                            <input
+                                type="text"
+                                placeholder="Escriba el nombre"
+                                required
+                                name="libro"
+                                value={data.libro}
+                                onChange={handleChange}
+                            />
                         </div>
-                        <div class="input-box">
-                            <span class="details">
-                                Nombre libro prestado
-                            </span>
-                            <input type="text" placeholder="Digite titulo" required name="titulo" />
+                        <div className="input-box">
+                            <span className="details">Descripcion</span>
+                            <input
+                                type="text"
+                                placeholder="Digite la descripcion"
+                                required
+                                name="descripcion"
+                                value={data.descripcion}
+                                onChange={handleChange}
+                            />
                         </div>
-                        <div class="input-box">
-                            <span class="details">
-                                Valor Multa
-                            </span>
-                            <input type="text" placeholder="Digite valor" required name="valor" />
+                        <div className="input-box">
+                            <span className="details">Valor Multa</span>
+                            <input
+                                type="text"
+                                placeholder="Digite el valor"
+                                required
+                                name="precio"
+                                value={data.precio}
+                                onChange={handleChange}
+                            />
                         </div>
-
-                        <div class="input-box">
-                            <span class="details">
-                                Dias en prestamo
-                            </span>
-                            <input type="text" placeholder="Digite los dias" required name="dias"
+                        <div className="input-box">
+                            <span className="details">Estado</span>
+                            <input
+                                type="text"
+                                placeholder="Digite el estado"
+                                required
+                                name="estado"
+                                value={data.estado}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
-                    <div class="button">
-                        <input type="submit" class="btt" value="Actualizar" />
+                    <div className="button">
+                        <input type="submit" className="btt" value="Actualizar" />
                     </div>
                 </form>
             </div>
