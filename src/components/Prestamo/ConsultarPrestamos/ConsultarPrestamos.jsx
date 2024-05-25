@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ModalEliminar from "../../UI/ModalEliminar";
 
-
 const ConsultarPrestamos = () => {
   const [prestamos, setPrestamos] = useState([]);
   const [filtroCedula, setFiltroCedula] = useState("");
@@ -18,7 +17,7 @@ const ConsultarPrestamos = () => {
         setPrestamos(response.data);
       })
       .catch((error) => {
-        console.error("Error al obtener los libros:", error);
+        console.error("Error al obtener los préstamos:", error);
       });
   }, []);
 
@@ -44,7 +43,7 @@ const ConsultarPrestamos = () => {
       const response = await eliminarPrestamo(id);
       toast.success(response.data);
     } catch (error) {
-      toast.error(error.response?.data || 'Error al eliminar cliente');
+      toast.error(error.response?.data || 'Error al eliminar préstamo');
       setPrestamos(originalData);
     } finally {
       setMostrarModal(false); // Oculta el modal después de la operación
@@ -63,8 +62,6 @@ const ConsultarPrestamos = () => {
         />
       </div>
 
-      <div className="contenedor-prestamos">
-        <table className="content-table-prestamo">
       <div className="contenedor">
         <table className="content-table">
           <thead>
@@ -72,8 +69,8 @@ const ConsultarPrestamos = () => {
               <th>Cédula</th>
               <th>Nombre</th>
               <th>Libro</th>
-              <th>Fecha Prestamo</th>
-              <th>Fecha Devolucion</th>
+              <th>Fecha Préstamo</th>
+              <th>Fecha Devolución</th>
               <th></th>
             </tr>
           </thead>
@@ -84,38 +81,32 @@ const ConsultarPrestamos = () => {
                   <td>{prestamo.cedula}</td>
                   <td>{prestamo.nombre}</td>
                   <td>{prestamo.libro.titulo}</td>
+                  <td>{formatearFecha(prestamo.fecha_inicio)}</td>
+                  <td>{formatearFecha(prestamo.fecha_devolucion)}</td>
+                  <td>
+                    <Link to={`/EditarPrestamo/${prestamo._id}`}>
+                      <button className='bEditar'>Editar</button>
+                    </Link>
+                    <button className='bEliminar' onClick={() => handleDelete(prestamo._id)}>Eliminar</button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="3">
-                  No se encontraron préstamos para la cédula ingresada.
-                </td>
-            {prestamos.map((prestamo, index) => (
-              <tr key={index}>
-                <td>{prestamo.cedula}</td>
-                <td>{prestamo.nombre}</td>
-                <td>{prestamo.libro.titulo}</td>
-                <td>{formatearFecha(prestamo.fecha_inicio)}</td>
-                <td>{formatearFecha(prestamo.fecha_devolucion)}</td>
-                <td>
-                  <Link to={`/EditarPrestamo/${prestamo._id}`}>
-                    <button className='bEditar'>Editar</button>
-                  </Link>
-                  <button className='bEliminar' onClick={() => handleDelete(prestamo._id)}>Eliminar</button>
-                </td>
+                <td colSpan="6">No se encontraron préstamos para la cédula ingresada.</td>
               </tr>
             )}
           </tbody>
         </table>
-        {mostrarModal && (
+      </div>
+
+      {mostrarModal && (
         <ModalEliminar
           eliminarId={confirmarEliminacion}
           setMostrarModal={setMostrarModal}
           idAEliminar={idAEliminar}
         />
       )}
-      </div>
     </div>
   );
 };
