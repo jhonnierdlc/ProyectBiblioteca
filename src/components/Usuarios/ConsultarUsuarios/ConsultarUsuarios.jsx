@@ -56,15 +56,17 @@ const ConsultarUsuarios = () => {
 
   return (
     <>
-      <div className="input-filtro-cc">
+      <div className="titleo">Buscar Usuario</div>
+
+      <div className="input-boxo">
         <input
-          className="input-filtro"
           type="text"
-          placeholder="Cédula"
+          placeholder="Buscar por cedula"
           value={filtroCedula}
           onChange={(e) => setFiltroCedula(e.target.value)}
         />
       </div>
+
       <div className="contenedor">
         <table className="content-table">
           <thead>

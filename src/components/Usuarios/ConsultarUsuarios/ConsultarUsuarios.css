@@ -1,13 +1,19 @@
-
-
-
-.contenedor{
-display: flex;
-justify-content: center;
-align-items: center;
-
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Alinea el contenido en columna */
+  height: 70vh;
 }
 
+.input-filtro-container {
+  margin-bottom: 20px; /* Añade espacio debajo del filtro */
+}
+
+.input-filtro {
+  padding: 10px;
+  font-size: 16px;
+}
 
 .content-table {
   background: #afe9c2;
@@ -17,11 +23,10 @@ align-items: center;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  
 }
 
 .content-table thead tr {
-  background-color: #1fb093;
+  background-color: #009879;
   color: #ffffff;
   text-align: center;
   font-weight: bold;
@@ -31,7 +36,6 @@ align-items: center;
 .content-table td {
   padding: 12px 15px;
   text-align: center;
-
 }
 
 .content-table tbody tr {
@@ -46,25 +50,23 @@ align-items: center;
   border-bottom: 2px solid #009879;
 }
 
-
-
 .content-table tbody tr.active-row {
   font-weight: bold;
   color: #009879;
 }
 
-.bEditar{
+.bEditar {
   background: #009879;
-border: none;
-margin-right: 8px;
-height: 32px;
-width: 67px;
-border-radius: 4px;
-color: #ffff;
-cursor: pointer;
+  border: none;
+  margin-right: 8px;
+  height: 32px;
+  width: 67px;
+  border-radius: 4px;
+  color: #ffff;
+  cursor: pointer;
 }
 
-.bEliminar{
+.bEliminar {
   background: red;
   border: none;
   height: 32px;
@@ -74,9 +76,9 @@ cursor: pointer;
   cursor: pointer;
 }
 
- /* modal */
+/* modal */
 
- .modal {
+.modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -114,5 +116,53 @@ cursor: pointer;
 
 .modal-content button:hover {
   background-color: #ff7875;
+}
+
+
+.titleo {
+  margin-top: 20px;
+  margin-left:580px;
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+  font-weight: bold;
+}
+
+.titleo::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 200px;
+  box-shadow: 7px 13px 90px #39a05d;
+}
+
+.user-details{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+
+.input-boxo{
+  margin-left:480px;
+  width: calc(1000px / 2 -20px);
+}
+
+.input-boxo .details{
+  display: block;
+  font-weight: 100;
+  margin-bottom: 5px;
+}
+
+.input-boxo input{
+  height: 45px;
+  width: 400px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #39a05d;
+  padding-left: 15px;
+  font-size: 16px;
 }
 
