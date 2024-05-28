@@ -1,30 +1,86 @@
 
   
-  .contenedor {
-    /* Estilos para el contenedor principal */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+ /* Slider */
+.slider-container {
+  max-width: 80%; /* Ajustar el ancho máximo del slider según tus necesidades */
+  margin: 0 auto;
   
-  .texto {
-    max-width: 600px; /* Ancho máximo del contenedor de texto */
-    text-align: center; /* Alineación del texto al centro */
-    margin-top: 20px; /* Margen superior para separar del logo */
-  }
+}
+
+.slider {
+  width: 100%;
+}
+
+.slider .img-banner {
+  width: 100%;
+  height: 300px; 
+  object-fit: cover; 
+  margin-top: 10px;
+border-radius: 2%;
   
-  .hom {
-    margin-top: 40px;
-    width: 300px; /* Ancho deseado para la imagen */
-    height: 500px; /* Altura automática para mantener la proporción */
-    margin-bottom: 10px; /* Margen inferior para separar del texto */
-  }
-  
-  .mensaje {
-    /* Estilos para el mensaje de texto */
-    font-size: 16px; /* Tamaño de fuente del mensaje */
-    line-height: 1.5; /* Altura de línea para mejorar la legibilidad */
-  }
-  
- 
-  
+}
+
+.slider-description {
+  text-align: center;
+}
+
+/* Sección de importancia de la lectura */
+.importance-section {
+  display: flex;
+  margin: 50px auto;
+  max-width: 1000px;
+}
+
+.image-container {
+  flex: 1;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 10px 5px 5px rgb(118, 118, 118);
+}
+
+.text-container {
+  flex: 1;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrar verticalmente el contenido */
+}
+
+.text-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.text-container p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
+
+.books-title {
+  flex: 1;
+  text-align: center;
+}
+
+.books-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+
+}
+.books-slider {
+  flex: 1;
+  max-width: 50%; 
+  margin-left: 10px; 
+}
+.img-algunos-libros{
+  max-width: 40%;
+  display: flex;
+  margin-left: 30%;
+}

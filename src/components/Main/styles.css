@@ -15,6 +15,12 @@ body{
     align-items: center;
     height: 85px;
     padding: 5px 10%;
+    z-index: 3;
+  
+}
+
+header:hover{
+  position: relative;
 }
 
 .header .logo{
