@@ -19,6 +19,7 @@ import { ToastContainer } from "react-toastify";
 import ConsultarPrestamos from "./components/Prestamo/ConsultarPrestamos/ConsultarPrestamos";
 import SeleccionMulta from "./components/Multa/SeleccionMulta"
 import EditarPrestamo from "./components/Prestamo/EditarPrestamo"
+import HistorialMulta from "./components/Multa/Historial"
 
 function App() {
   const user = localStorage.getItem("token");
@@ -51,6 +52,8 @@ function App() {
             <Route path="/EditarMulta/:id" element={<EditarMulta />} />
             <Route path="/SeleccionMulta" element={<SeleccionMulta />} />
             <Route path="/EditarPrestamo/:id" element={<EditarPrestamo />} />
+            <Route path="/HistorialMulta" element={<HistorialMulta />} />
+
 
           </>
         )}

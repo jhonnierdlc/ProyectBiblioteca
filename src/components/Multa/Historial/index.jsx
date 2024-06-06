@@ -3,9 +3,9 @@ import "./styles.css";
 import ModalEliminar from "../../UI/ModalEliminar";
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { inactivarMulta, obtenerMultas } from "../../../services/multaService";
+import { eliminarMulta, obtenerMultas } from "../../../services/multaService";
 
-const ConsultarMultas = () => {
+const HistorialMultas = () => {
   const [multas, setMultas] = useState([]);
   const [mostrarModal, setMostrarModal] = useState(false);
   const [idAEliminar, setIdAEliminar] = useState(null);
@@ -36,7 +36,7 @@ const ConsultarMultas = () => {
         multa._id === id ? { ...multa, estado: 'Inactivo' } : multa
       );
       setMultas(updatedMultas);
-      const response = await inactivarMulta(id);
+      const response = await eliminarMulta(id);
       toast.success(response.data);
     } catch (error) {
       toast.error(error.response?.data || 'Error al inactivar multa');
@@ -60,7 +60,7 @@ const ConsultarMultas = () => {
           </tr>
         </thead>
         <tbody>
-          {multas.filter(multa => multa.estado === 'Activo').map((multa) => (
+          {multas.filter(multa => multa.estado === 'Inactivo').map((multa) => (
             <tr key={multa._id}>
               <td>{multa.cliente.cedula}</td>
               <td>{multa.libro}</td>
@@ -68,9 +68,6 @@ const ConsultarMultas = () => {
               <td>{multa.precio}</td>
               <td>{multa.estado}</td>
               <td>
-                <Link to={`/EditarMulta/${multa._id}`}>
-                  <button className='bEditar'>Editar</button>
-                </Link>
                 <button className='bEliminar' onClick={() => handleDelete(multa._id)}>Eliminar</button>
               </td>
             </tr>
@@ -89,4 +86,4 @@ const ConsultarMultas = () => {
   );
 };
 
-export default ConsultarMultas;
+export default HistorialMultas;
