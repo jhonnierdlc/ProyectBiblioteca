@@ -111,7 +111,7 @@ function RegistrarMulta() {
   return (
     <div className="bdy">
       <div className="containerr">
-        <div className="title">Registrar Multa</div>
+        <div className="title-modal">Registrar Multa</div>
         <form onSubmit={handleSubmit}>
           <div className="user-details">
             <div className="input-box">

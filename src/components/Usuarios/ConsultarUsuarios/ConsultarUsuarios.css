@@ -1,35 +1,60 @@
-.contenedor {
+.consultar-usuarios-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  flex-direction: column; /* Alinea el contenido en columna */
-  height: 70vh;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f8fa;
+  min-height: 100vh;
 }
 
-.input-filtro-container {
-  margin-bottom: 20px; /* Añade espacio debajo del filtro */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  position: relative;
+  text-align: center;
+}
+
+.title::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 200px;
+  background-color: #39a05d;
+  border-radius: 2px;
+}
+
+.input-container {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .input-filtro {
+  width: 100%;
   padding: 10px;
   font-size: 16px;
+  border: 1px solid #39a05d;
+  border-radius: 5px;
+}
+
+.table-container {
+  width: 100%;
+  max-width: 1000px;
+  overflow-x: auto;
 }
 
 .content-table {
-  background: #afe9c2;
+  width: 100%;
   border-collapse: collapse;
-  font-size: 0.9em;
-  min-width: 400px;
-  border-radius: 5px 5px 0 0;
-  overflow: hidden;
+  background-color: #afe9c2;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-
-.content-table thead tr {
-  background-color: #009879;
-  color: #ffffff;
-  text-align: center;
-  font-weight: bold;
+  border-radius: 5px;
 }
 
 .content-table th,
@@ -38,45 +63,48 @@
   text-align: center;
 }
 
-.content-table tbody tr {
-  border-bottom: 1px solid #dddddd;
+.content-table th {
+  background-color: #009879;
+  color: #ffffff;
 }
 
-.content-table tbody tr:nth-of-type(even) {
+.content-table tr:nth-child(even) {
   background-color: #f3f3f3;
 }
 
-.content-table tbody tr:last-of-type {
+.content-table tr:last-child {
   border-bottom: 2px solid #009879;
 }
 
-.content-table tbody tr.active-row {
-  font-weight: bold;
-  color: #009879;
-}
-
-.bEditar {
-  background: #009879;
+.btn {
+  padding: 8px 12px;
   border: none;
-  margin-right: 8px;
-  height: 32px;
-  width: 67px;
   border-radius: 4px;
-  color: #ffff;
   cursor: pointer;
+  font-size: 14px;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.bEliminar {
-  background: red;
-  border: none;
-  height: 32px;
-  width: 67px;
-  border-radius: 4px;
-  color: #ffff;
-  cursor: pointer;
+.btn-edit {
+  background-color: #009879;
+  color: #fff;
 }
 
-/* modal */
+.btn-delete {
+  background-color: red;
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background-color: #00785b;
+}
+
+.btn-delete:hover {
+  background-color: #cc0000;
+}
+
+/* Modal */
 
 .modal {
   position: fixed;
@@ -91,7 +119,7 @@
 }
 
 .modal-content {
-  background-color: white;
+  background-color: #fff;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -104,12 +132,11 @@
 }
 
 .modal-content button {
+  padding: 10px 20px;
   background-color: #ff4d4f;
-  color: white;
+  color: #fff;
   border: none;
-  border-radius: 5px;
-  width: 73px;
-  height: 40px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -118,51 +145,50 @@
   background-color: #ff7875;
 }
 
+/* Responsiveness */
 
-.titleo {
-  margin-top: 20px;
-  margin-left:580px;
-  font-size: 25px;
-  font-weight: 500;
-  position: relative;
-  font-weight: bold;
+@media (max-width: 768px) {
+  .input-container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+
+  .input-filtro {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .content-table th,
+  .content-table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
 }
 
-.titleo::before{
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 200px;
-  box-shadow: 7px 13px 90px #39a05d;
-}
+@media (max-width: 480px) {
+  .input-container {
+    padding: 0 5px;
+  }
 
-.user-details{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 20px 0 12px 0;
-}
+  .input-filtro {
+    font-size: 12px;
+    padding: 6px;
+  }
 
-.input-boxo{
-  margin-left:480px;
-  width: calc(1000px / 2 -20px);
-}
+  .content-table th,
+  .content-table td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
 
-.input-boxo .details{
-  display: block;
-  font-weight: 100;
-  margin-bottom: 5px;
+  .btn {
+    font-size: 10px;
+    padding: 5px 8px;
+    margin-right: 3px;
+  }
 }
-
-.input-boxo input{
-  height: 45px;
-  width: 400px;
-  outline: none;
-  border-radius: 5px;
-  border: 1px solid #39a05d;
-  padding-left: 15px;
-  font-size: 16px;
-}
-

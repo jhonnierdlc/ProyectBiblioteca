@@ -65,7 +65,7 @@ function RegistroUsuarios() {
   return (
     <div className="bdy">
       <div class="containerr">
-        <div class="title"> Registro de Usuario </div>
+        <div class="title-modal"> Registro de Usuario </div>
         <form>
           <div class="user-details">
             <div class="input-box">

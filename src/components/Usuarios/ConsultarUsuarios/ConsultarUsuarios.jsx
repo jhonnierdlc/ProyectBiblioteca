@@ -10,9 +10,9 @@ import {
 
 const ConsultarUsuarios = () => {
   const [clientes, setClientes] = useState([]);
-  const [mostrarModal, setMostrarModal] = useState(false); // Nuevo estado para mostrar/ocultar el modal
-  const [idAEliminar, setIdAEliminar] = useState(null); // Estado para almacenar el ID del cliente a eliminar
-  const [filtroCedula, setFiltroCedula] = useState(""); // Estado para el valor del filtro de cédula
+  const [mostrarModal, setMostrarModal] = useState(false);
+  const [idAEliminar, setIdAEliminar] = useState(null);
+  const [filtroCedula, setFiltroCedula] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -28,9 +28,9 @@ const ConsultarUsuarios = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (id) => {
-    setIdAEliminar(id); // Establece el ID del cliente a eliminar
-    setMostrarModal(true); // Muestra el modal de confirmación
+  const handleDelete = (id) => {
+    setIdAEliminar(id);
+    setMostrarModal(true);
   };
 
   const confirmarEliminacion = async (id) => {
@@ -46,7 +46,7 @@ const ConsultarUsuarios = () => {
       toast.error(error.response?.data || "Error al eliminar cliente");
       setClientes(originalData);
     } finally {
-      setMostrarModal(false); // Oculta el modal después de la operación
+      setMostrarModal(false);
     }
   };
 
@@ -55,19 +55,20 @@ const ConsultarUsuarios = () => {
   );
 
   return (
-    <>
-      <div className="titleo">Buscar Usuario</div>
+    <div className="consultar-usuarios-container">
+      <h1 className="title">Buscar Usuario</h1>
 
-      <div className="input-boxo">
+      <div className="input-container">
         <input
           type="text"
-          placeholder="Buscar por cedula"
+          placeholder="Buscar por cédula"
           value={filtroCedula}
           onChange={(e) => setFiltroCedula(e.target.value)}
+          className="input-filtro"
         />
       </div>
 
-      <div className="contenedor">
+      <div className="table-container">
         <table className="content-table">
           <thead>
             <tr>
@@ -76,7 +77,7 @@ const ConsultarUsuarios = () => {
               <th>Edad</th>
               <th>Dirección</th>
               <th>Celular</th>
-              <th></th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -90,10 +91,10 @@ const ConsultarUsuarios = () => {
                   <td>{cliente.celular}</td>
                   <td>
                     <Link to={`/EditarUsuario/${cliente._id}`}>
-                      <button className="bEditar">Editar</button>
+                      <button className="btn btn-edit">Editar</button>
                     </Link>
                     <button
-                      className="bEliminar"
+                      className="btn btn-delete"
                       onClick={() => handleDelete(cliente._id)}
                     >
                       Eliminar
@@ -110,16 +111,16 @@ const ConsultarUsuarios = () => {
             )}
           </tbody>
         </table>
-
-        {mostrarModal && (
-          <ModalEliminar
-            eliminarId={confirmarEliminacion}
-            setMostrarModal={setMostrarModal}
-            idAEliminar={idAEliminar}
-          />
-        )}
       </div>
-    </>
+
+      {mostrarModal && (
+        <ModalEliminar
+          eliminarId={confirmarEliminacion}
+          setMostrarModal={setMostrarModal}
+          idAEliminar={idAEliminar}
+        />
+      )}
+    </div>
   );
 };
 

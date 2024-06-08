@@ -1,0 +1,115 @@
+.consultar-multas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f8fa;
+    min-height: 100vh;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    position: relative;
+    text-align: center;
+  }
+  
+  .title::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    height: 3px;
+    width: 200px;
+    background-color: #39a05d;
+    border-radius: 2px;
+  }
+  
+  .multas-lista {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .multa-card {
+    background: #afe9c2;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+  }
+  
+  .multa-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .multa-info p {
+    margin: 10px 0;
+    color: black;
+  }
+  
+  .multa-info p strong {
+    color: black;
+  }
+  
+  
+  .multa-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .btn-edit {
+    background-color: #009879;
+    color: #fff;
+  }
+  
+  .btn-delete {
+    background-color: red;
+    color: #fff;
+  }
+  
+  .btn-edit:hover {
+    background-color: #00785b;
+    transform: scale(1.05);
+  }
+  
+  .btn-delete:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+  }
+  
+  /* Responsiveness */
+  
+  @media (max-width: 768px) {
+    .multa-card {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .btn {
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+  }
+  
