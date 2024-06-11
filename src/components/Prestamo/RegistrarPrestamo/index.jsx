@@ -1,20 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "./styles.css";
-import Joi from 'joi';
-import { toast } from 'react-toastify';
+import Joi from "joi";
+import { toast } from "react-toastify";
 import { registrarPrestamo } from "../../../services/prestamoServices";
 import { obtenerLibroId } from "../../../services/libroServices";
-import { useParams, useNavigate } from 'react-router-dom';
+import emailjs from "@emailjs/browser";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Prestamo = () => {
-  const [data, setData] = useState({ isbn: "", titulo: "", descripcion: "", portada: "", autor: "" });
+  const [data, setData] = useState({
+    isbn: "",
+    titulo: "",
+    descripcion: "",
+    portada: "",
+    autor: "",
+  });
   const [prestamo, setPrestamo] = useState({
-    libroId:"",
+    libroId: "",
     cedula: "",
     nombre: "",
     celular: "",
   });
   const { id } = useParams();
+  const templateParams = {
+    from_name: prestamo.nombre,
+    from_email: "jhonnierjdelacruz@unicesar.edu.co",
+    to_name: "Biblioteca",
+    message: data.titulo,
+  };
   const navigate = useNavigate();
 
   const schema = {
@@ -36,12 +49,14 @@ const Prestamo = () => {
           autor: libro.autor,
         };
         setData(updatedData);
-        setPrestamo(prevState => ({
+        setPrestamo((prevState) => ({
           ...prevState,
-          libroId: id  // Asignamos el valor de id a libroId
+          libroId: id, // Asignamos el valor de id a libroId
         }));
       } catch (error) {
-        toast.error(error.response?.data || 'Error al obtener datos del cliente');
+        toast.error(
+          error.response?.data || "Error al obtener datos del cliente"
+        );
         console.error(error);
       }
     }
@@ -59,27 +74,44 @@ const Prestamo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const serviceID = "service_mw84yzk";
+    const emailTemplate = "template_gxm06va";
+    const publicId = "RdVSXJ9drnttQH2YX";
+    const { errorEmail } = (prestamo, { abortEarly: false });
 
-    const { error } = Joi.object(schema).validate(prestamo, { abortEarly: false });
+    const { error } = Joi.object(schema).validate(prestamo, {
+      abortEarly: false,
+    });
 
     if (error) {
-      console.error('Error de validación:', error.details);
+      console.error("Error de validación:", error.details);
       return;
     }
 
     try {
       await registrarPrestamo(prestamo);
-      toast.success('Préstamo registrado exitosamente');
-      navigate('/Inicio');
+      e.preventDefault();
+      await emailjs
+        .send(serviceID, emailTemplate, templateParams, publicId)
+        .then(
+          (response) => {
+            console.log("Email enviado!", response);
+          },
+          (error) => {
+            console.log("FAILED...", error.text);
+          }
+        );
+      toast.success("Préstamo registrado exitosamente");
+      navigate("/Inicio");
     } catch (error) {
-      console.error('Error al registrar el préstamo:', error);
-      toast.error('Error al registrar el préstamo');
+      console.error("Error al registrar el préstamo:", error);
+      toast.error("Error al registrar el préstamo");
     }
   };
 
   return (
     <div className="bdy">
-      <div className="containerr" style={{ marginTop:"100px"}}>
+      <div className="containerr" style={{ marginTop: "100px" }}>
         <div className="title"> Registro de Préstamo </div>
         <div className="libroo">
           <img
@@ -89,9 +121,8 @@ const Prestamo = () => {
           />
         </div>
         <form onSubmit={handleSubmit}>
-          
           <div className="user-details">
-          <div className="input-box">
+            <div className="input-box">
               <span className="details">Título del Libro</span>
               <input type="text" placeholder="" readOnly value={data.titulo} />
             </div>
@@ -101,15 +132,36 @@ const Prestamo = () => {
             </div>
             <div className="input-box">
               <span className="details">Cédula Cliente</span>
-              <input type="text" placeholder="Digite la cédula" required name="cedula" value={prestamo.cedula} onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Digite la cédula"
+                required
+                name="cedula"
+                value={prestamo.cedula}
+                onChange={handleChange}
+              />
             </div>
             <div className="input-box">
               <span className="details">Nombre Cliente</span>
-              <input type="text" placeholder="Digite el nombre" required name="nombre" value={prestamo.nombre} onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Digite el nombre"
+                required
+                name="nombre"
+                value={prestamo.nombre}
+                onChange={handleChange}
+              />
             </div>
             <div className="input-box">
               <span className="details">Celular</span>
-              <input type="text" placeholder="Digite el celular" required name="celular" value={prestamo.celular} onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Digite el celular"
+                required
+                name="celular"
+                value={prestamo.celular}
+                onChange={handleChange}
+              />
             </div>
           </div>
           <div className="button">
