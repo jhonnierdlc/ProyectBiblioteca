@@ -4,6 +4,7 @@ import { crearLibro } from "../../../services/libroServices";
 import Joi from "joi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import emailjs from "@emailjs/browser";
 
 const RegistroLibros = () => {
   const [book, setBook] = useState({
@@ -13,6 +14,12 @@ const RegistroLibros = () => {
     portada: "",
     autor: "",
   });
+  const templateParams = {
+    from_name: "Administrador",
+    from_email: "jhonnierjdelacruz@unicesar.edu.co",
+    to_name: "BibliotecaX",
+    message: book.titulo,
+  };
   const navigate = useNavigate();
 
   const schema = {
@@ -34,6 +41,15 @@ const RegistroLibros = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const serviceID = "service_mw84yzk";
+    const emailTemplate = "template_41om8n3";
+    const publicId = "RdVSXJ9drnttQH2YX";
+    const { errorEmail } = (book, { abortEarly: false });
+
+    if (errorEmail) {
+      console.error("Error de validación:", errorEmail.details);
+      return;
+    }
 
     const { error } = Joi.object(schema).validate(book, { abortEarly: false });
 
@@ -44,7 +60,17 @@ const RegistroLibros = () => {
 
     try {
       await crearLibro(book);
-
+      e.preventDefault();
+      await emailjs
+        .send(serviceID, emailTemplate, templateParams, publicId)
+        .then(
+          (response) => {
+            console.log("Email enviado!", response);
+          },
+          (error) => {
+            console.log("FAILED...", error.text);
+          }
+        );
       toast.success("Libro creado con éxito");
       navigate("/");
     } catch (error) {
